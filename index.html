@@ -1,224 +1,997 @@
-<html><head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, viewport-fit=cover">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<title>Verify Astutech Server Account | FF Beta</title>
-<meta name="description" content="Verify to Access Astutech Beta Server!">
-<meta name="theme-color" content="#040710">
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no,maximum-scale=1.0">
+    <title>SOLITUDE</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style nonce="Z3WQvVwET8c1Pd6kYLVveg==">
+        :root { 
+            --bg:#020106; --t1:#fff; 
+            --cyan:#00ffff; --purp:#a855f7; 
+            --pink:#ff007f; --ff-orange:#f97316; --red-mnt:#ef4444; 
+            --neon-scale: 1; --neon-speed: 5s; 
+        }
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body { 
+            font-family:'Plus Jakarta Sans',sans-serif; min-height:100vh; 
+            display:flex; align-items:center; justify-content:center; padding:12px; color:var(--t1); 
+            transition: zoom 0.3s ease; 
+            background-image: url('background.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            position: relative;
+            overflow: hidden; 
+        }
+        body::before {
+            content:""; position:fixed; inset:0; z-index:0;
+            background: radial-gradient(circle at top right, rgba(255,0,127,0.25) 0%, transparent 50%), 
+                        radial-gradient(circle at bottom left, rgba(0,255,255,0.25) 0%, transparent 50%);
+            filter:blur(30px); animation: pulseBg 6s infinite alternate;
+            pointer-events: none;
+        }
+        body::after {
+            content:""; position:fixed; inset:0; z-index:0;
+            background: rgba(0,0,0,0.5); 
+            pointer-events: none;
+        }
 
-<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin="">
-<link rel="preload" href="/core/js/1771890199.js" as="script">
-<link rel="preload" href="/static/1771891201.css" as="style">
-<link rel="preload" href="https://cdn.jsdelivr.net/npm/crypto-js@4.1.1/crypto-js.min.js" as="script">
-<link rel="preload" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js" as="script">
-<script type="text/javascript">
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/sw.js', { scope: '/' });
-  }
-</script>
-<style>
-  *{box-sizing:border-box;margin:0;padding:0}
-  body{background:#040710;min-height:100vh;font-family:system-ui,sans-serif}
-  .ld-spinner{position:fixed;inset:0;background:#040710;display:flex;align-items:center;justify-content:center;z-index:9999;transition:opacity 300ms ease}
-  .ld-spinner.hidden{opacity:0;pointer-events:none}
-  .ld-ring{width:3.5rem;height:3.5rem;border-radius:50%;border:3px solid transparent;border-top-color:#53f6ff;border-right-color:#ff4b91;animation:lds 800ms linear infinite}
-  @keyframes lds{to{transform:rotate(360deg)}}
-  #wizard{visibility:hidden}
-</style>
+        #landscapeBlocker {
+            position: fixed; inset: 0; background: #000; z-index: 99999998;
+            display: none; align-items: center; justify-content: center;
+            flex-direction: column; padding: 20px; text-align: center;
+        }
+        #landscapeBlocker i { font-size: 80px; color: #fff; margin-bottom: 25px; animation: textNeon 1.5s infinite alternate; }
+        #landscapeBlocker span { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 16px; color: #fff; font-weight: bold; line-height: 1.6; letter-spacing: 1px; text-transform: uppercase;}
+        
+        @media (orientation: portrait) { 
+            #landscapeBlocker { display: flex !important; } 
+        }
 
-<link rel="stylesheet" href="/static/1771891201.css" media="all" onload="this.media='all'">
-<noscript><link rel="stylesheet" href="/static/1771891201.css"></noscript>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" media="all" onload="this.media='all'">
-<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css"></noscript>
+        #introScreen {
+            position: fixed; inset: 0; background: #020106; z-index: 99999999;
+            display: flex; align-items: center; justify-content: center;
+            transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .intro-text {
+            font-family: 'Orbitron', sans-serif; font-size: 60px; font-weight: 900;
+            color: #fff; letter-spacing: 10px;
+            animation: superNeon 1.5s infinite alternate, introZoom 3s forwards;
+            text-align: center;
+        }
 
-<script type="text/javascript">
-  window.__EMBEDDED_JS_VER__ = "v10";
-  window.__KS_CHALLENGE__ = "e8fce693d70aeab540f242062097f322";
-  const DISCORD_LOGGED  = false;
-  const HAS_OLD_BIND    = false;
-  const OLD_BIND_ACCT   = "";
-  const OLD_BIND_REMAIN = 0;
-  const TXT             = {"access_denied_title": "Access denied", "account": "Account", "ad_break": "Ad Break", "ad_break_desc": "Tap below to view a short ad to continue", "ad_thanks": "Thank you!", "ad_wait": "Please wait...", "adblock_body": "Please disable your ad blocker and refresh the page.", "adblock_message": "Disable your ad blocker to continue.", "adblock_title": "Ad blocker detected", "brave_message": "Turn off Brave Shields, or use Chrome/Firefox.", "cancel": "Cancel", "cannot_start": "Unable to start", "congrats": "Access granted!", "copied": "Copied!", "copy": "Copy", "dns_message": "Disable DNS-level ad blocking.", "error": "Something went wrong", "expires": "Expires in", "expires_in_full": "{h}h {m}m {s}s remaining", "fix_and_reload": "Fix the issue above, then reload.", "generic_error": "Something went wrong. Please refresh the page!", "hint_footer": "Feedback: support@unlockffbeta.com", "hint_step1": "\ud83d\udca1 100% free \u2014 never sold anywhere.", "hint_step2": "\ud83d\udca1 Discord login unlocks extra features!", "hint_step3": "\ud83d\udca1 Misuse leads to a permanent ban. See TOS.", "hint_step4": "\ud83d\udca1 Manage your account at dash.unlockffbeta.com", "i_disabled_ads": "I fixed it \u2014 Reload", "invalid_id": "Invalid ID", "key": "Key", "login": "Sign in with Discord", "logout": "Sign out", "next": "Continue", "of": "of", "open_ad": "Open Ad", "placeholder": "Enter Account ID", "rate_limited": "Please wait {minutes}m {seconds}s, or sign in with Discord.", "rely_on_ads": "We rely on ads to keep this service free.", "renew_failed": "Renewal failed", "renew_now": "Renew", "retrieving": "Please wait...", "session_invalid": "Session expired. Please restart.", "start": "Continue without Discord", "start_discord": "Continue with Discord", "step": "Step", "title": "Verify Astutech Account", "too_early": "You can\u0027t renew yet.", "tor_message": "Tor Browser is not supported. Please use Chrome or Firefox.", "unexpected": "Unexpected error", "unlock_failed": "Unlock failed", "unlocking": "Verifying...", "use_digits": "Enter a valid Account ID", "version_mismatch_message": "Please reload the page.", "version_mismatch_title": "Version mismatch", "watch_ad": "Continue (an ad will open)"};
-</script>
-<script src="https://zzlocalsquared.com/48/b4/f9/48b4f934bf6a2e2fbd7806ff1d89b4a4.js?mg=1" type="text/javascript"></script>
-<link rel="preconnect" href="https://masterlythehague.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://masterlythehague.com"><link rel="preconnect" href="https://static.nresystems.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://static.nresystems.com"><script src="https://preferencenail.com/sfp.js"></script><script type="text/javascript" src="//zzlocalsquared.com/04/e1/cf/04e1cf2ab496365051f4de7bee09ef40.js?mg=1"></script><style>:root{--swal2-outline: 0 0 0 3px rgba(100, 150, 200, 0.5);--swal2-container-padding: 0.625em;--swal2-backdrop: rgba(0, 0, 0, 0.4);--swal2-backdrop-transition: background-color 0.15s;--swal2-width: 32em;--swal2-padding: 0 0 1.25em;--swal2-border: none;--swal2-border-radius: 0.3125rem;--swal2-background: white;--swal2-color: #545454;--swal2-show-animation: swal2-show 0.3s;--swal2-hide-animation: swal2-hide 0.15s forwards;--swal2-icon-zoom: 1;--swal2-title-padding: 0.8em 1em 0;--swal2-html-container-padding: 1em 1.6em 0.3em;--swal2-input-border: 1px solid #d9d9d9;--swal2-input-border-radius: 0.1875em;--swal2-input-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.06), 0 0 0 3px transparent;--swal2-input-background: transparent;--swal2-input-transition: border-color 0.2s, box-shadow 0.2s;--swal2-input-hover-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.06), 0 0 0 3px transparent;--swal2-input-focus-border: 1px solid #b4dbed;--swal2-input-focus-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.06), 0 0 0 3px rgba(100, 150, 200, 0.5);--swal2-progress-step-background: #add8e6;--swal2-validation-message-background: #f0f0f0;--swal2-validation-message-color: #666;--swal2-footer-border-color: #eee;--swal2-footer-background: transparent;--swal2-footer-color: inherit;--swal2-timer-progress-bar-background: rgba(0, 0, 0, 0.3);--swal2-close-button-position: initial;--swal2-close-button-inset: auto;--swal2-close-button-font-size: 2.5em;--swal2-close-button-color: #ccc;--swal2-close-button-transition: color 0.2s, box-shadow 0.2s;--swal2-close-button-outline: initial;--swal2-close-button-box-shadow: inset 0 0 0 3px transparent;--swal2-close-button-focus-box-shadow: inset var(--swal2-outline);--swal2-close-button-hover-transform: none;--swal2-actions-justify-content: center;--swal2-actions-width: auto;--swal2-actions-margin: 1.25em auto 0;--swal2-actions-padding: 0;--swal2-actions-border-radius: 0;--swal2-actions-background: transparent;--swal2-action-button-transition: background-color 0.2s, box-shadow 0.2s;--swal2-action-button-hover: black 10%;--swal2-action-button-active: black 10%;--swal2-confirm-button-box-shadow: none;--swal2-confirm-button-border-radius: 0.25em;--swal2-confirm-button-background-color: #7066e0;--swal2-confirm-button-color: #fff;--swal2-deny-button-box-shadow: none;--swal2-deny-button-border-radius: 0.25em;--swal2-deny-button-background-color: #dc3741;--swal2-deny-button-color: #fff;--swal2-cancel-button-box-shadow: none;--swal2-cancel-button-border-radius: 0.25em;--swal2-cancel-button-background-color: #6e7881;--swal2-cancel-button-color: #fff;--swal2-toast-show-animation: swal2-toast-show 0.5s;--swal2-toast-hide-animation: swal2-toast-hide 0.1s forwards;--swal2-toast-border: none;--swal2-toast-box-shadow: 0 0 1px hsl(0deg 0% 0% / 0.075), 0 1px 2px hsl(0deg 0% 0% / 0.075), 1px 2px 4px hsl(0deg 0% 0% / 0.075), 1px 3px 8px hsl(0deg 0% 0% / 0.075), 2px 4px 16px hsl(0deg 0% 0% / 0.075)}[data-swal2-theme=dark]{--swal2-dark-theme-black: #19191a;--swal2-dark-theme-white: #e1e1e1;--swal2-background: var(--swal2-dark-theme-black);--swal2-color: var(--swal2-dark-theme-white);--swal2-footer-border-color: #555;--swal2-input-background: color-mix(in srgb, var(--swal2-dark-theme-black), var(--swal2-dark-theme-white) 10%);--swal2-validation-message-background: color-mix( in srgb, var(--swal2-dark-theme-black), var(--swal2-dark-theme-white) 10% );--swal2-validation-message-color: var(--swal2-dark-theme-white);--swal2-timer-progress-bar-background: rgba(255, 255, 255, 0.7)}@media(prefers-color-scheme: dark){[data-swal2-theme=auto]{--swal2-dark-theme-black: #19191a;--swal2-dark-theme-white: #e1e1e1;--swal2-background: var(--swal2-dark-theme-black);--swal2-color: var(--swal2-dark-theme-white);--swal2-footer-border-color: #555;--swal2-input-background: color-mix(in srgb, var(--swal2-dark-theme-black), var(--swal2-dark-theme-white) 10%);--swal2-validation-message-background: color-mix( in srgb, var(--swal2-dark-theme-black), var(--swal2-dark-theme-white) 10% );--swal2-validation-message-color: var(--swal2-dark-theme-white);--swal2-timer-progress-bar-background: rgba(255, 255, 255, 0.7)}}body.swal2-shown:not(.swal2-no-backdrop,.swal2-toast-shown){overflow:hidden}body.swal2-height-auto{height:auto !important}body.swal2-no-backdrop .swal2-container{background-color:rgba(0,0,0,0) !important;pointer-events:none}body.swal2-no-backdrop .swal2-container .swal2-popup{pointer-events:auto}body.swal2-no-backdrop .swal2-container .swal2-modal{box-shadow:0 0 10px var(--swal2-backdrop)}body.swal2-toast-shown .swal2-container{box-sizing:border-box;width:360px;max-width:100%;background-color:rgba(0,0,0,0);pointer-events:none}body.swal2-toast-shown .swal2-container.swal2-top{inset:0 auto auto 50%;transform:translateX(-50%)}body.swal2-toast-shown .swal2-container.swal2-top-end,body.swal2-toast-shown .swal2-container.swal2-top-right{inset:0 0 auto auto}body.swal2-toast-shown .swal2-container.swal2-top-start,body.swal2-toast-shown .swal2-container.swal2-top-left{inset:0 auto auto 0}body.swal2-toast-shown .swal2-container.swal2-center-start,body.swal2-toast-shown .swal2-container.swal2-center-left{inset:50% auto auto 0;transform:translateY(-50%)}body.swal2-toast-shown .swal2-container.swal2-center{inset:50% auto auto 50%;transform:translate(-50%, -50%)}body.swal2-toast-shown .swal2-container.swal2-center-end,body.swal2-toast-shown .swal2-container.swal2-center-right{inset:50% 0 auto auto;transform:translateY(-50%)}body.swal2-toast-shown .swal2-container.swal2-bottom-start,body.swal2-toast-shown .swal2-container.swal2-bottom-left{inset:auto auto 0 0}body.swal2-toast-shown .swal2-container.swal2-bottom{inset:auto auto 0 50%;transform:translateX(-50%)}body.swal2-toast-shown .swal2-container.swal2-bottom-end,body.swal2-toast-shown .swal2-container.swal2-bottom-right{inset:auto 0 0 auto}@media print{body.swal2-shown:not(.swal2-no-backdrop,.swal2-toast-shown){overflow-y:scroll !important}body.swal2-shown:not(.swal2-no-backdrop,.swal2-toast-shown)>[aria-hidden=true]{display:none}body.swal2-shown:not(.swal2-no-backdrop,.swal2-toast-shown) .swal2-container{position:static !important}}div:where(.swal2-container){display:grid;position:fixed;z-index:1060;inset:0;box-sizing:border-box;grid-template-areas:"top-start     top            top-end" "center-start  center         center-end" "bottom-start  bottom-center  bottom-end";grid-template-rows:minmax(min-content, auto) minmax(min-content, auto) minmax(min-content, auto);height:100%;padding:var(--swal2-container-padding);overflow-x:hidden;transition:var(--swal2-backdrop-transition);-webkit-overflow-scrolling:touch}div:where(.swal2-container).swal2-backdrop-show,div:where(.swal2-container).swal2-noanimation{background:var(--swal2-backdrop)}div:where(.swal2-container).swal2-backdrop-hide{background:rgba(0,0,0,0) !important}div:where(.swal2-container).swal2-top-start,div:where(.swal2-container).swal2-center-start,div:where(.swal2-container).swal2-bottom-start{grid-template-columns:minmax(0, 1fr) auto auto}div:where(.swal2-container).swal2-top,div:where(.swal2-container).swal2-center,div:where(.swal2-container).swal2-bottom{grid-template-columns:auto minmax(0, 1fr) auto}div:where(.swal2-container).swal2-top-end,div:where(.swal2-container).swal2-center-end,div:where(.swal2-container).swal2-bottom-end{grid-template-columns:auto auto minmax(0, 1fr)}div:where(.swal2-container).swal2-top-start>.swal2-popup{align-self:start}div:where(.swal2-container).swal2-top>.swal2-popup{grid-column:2;place-self:start center}div:where(.swal2-container).swal2-top-end>.swal2-popup,div:where(.swal2-container).swal2-top-right>.swal2-popup{grid-column:3;place-self:start end}div:where(.swal2-container).swal2-center-start>.swal2-popup,div:where(.swal2-container).swal2-center-left>.swal2-popup{grid-row:2;align-self:center}div:where(.swal2-container).swal2-center>.swal2-popup{grid-column:2;grid-row:2;place-self:center center}div:where(.swal2-container).swal2-center-end>.swal2-popup,div:where(.swal2-container).swal2-center-right>.swal2-popup{grid-column:3;grid-row:2;place-self:center end}div:where(.swal2-container).swal2-bottom-start>.swal2-popup,div:where(.swal2-container).swal2-bottom-left>.swal2-popup{grid-column:1;grid-row:3;align-self:end}div:where(.swal2-container).swal2-bottom>.swal2-popup{grid-column:2;grid-row:3;place-self:end center}div:where(.swal2-container).swal2-bottom-end>.swal2-popup,div:where(.swal2-container).swal2-bottom-right>.swal2-popup{grid-column:3;grid-row:3;place-self:end end}div:where(.swal2-container).swal2-grow-row>.swal2-popup,div:where(.swal2-container).swal2-grow-fullscreen>.swal2-popup{grid-column:1/4;width:100%}div:where(.swal2-container).swal2-grow-column>.swal2-popup,div:where(.swal2-container).swal2-grow-fullscreen>.swal2-popup{grid-row:1/4;align-self:stretch}div:where(.swal2-container).swal2-no-transition{transition:none !important}div:where(.swal2-container)[popover]{width:auto;border:0}div:where(.swal2-container) div:where(.swal2-popup){display:none;position:relative;box-sizing:border-box;grid-template-columns:minmax(0, 100%);width:var(--swal2-width);max-width:100%;padding:var(--swal2-padding);border:var(--swal2-border);border-radius:var(--swal2-border-radius);background:var(--swal2-background);color:var(--swal2-color);font-family:inherit;font-size:1rem}div:where(.swal2-container) div:where(.swal2-popup):focus{outline:none}div:where(.swal2-container) div:where(.swal2-popup).swal2-loading{overflow-y:hidden}div:where(.swal2-container) div:where(.swal2-popup).swal2-draggable{cursor:grab}div:where(.swal2-container) div:where(.swal2-popup).swal2-draggable div:where(.swal2-icon){cursor:grab}div:where(.swal2-container) div:where(.swal2-popup).swal2-dragging{cursor:grabbing}div:where(.swal2-container) div:where(.swal2-popup).swal2-dragging div:where(.swal2-icon){cursor:grabbing}div:where(.swal2-container) h2:where(.swal2-title){position:relative;max-width:100%;margin:0;padding:var(--swal2-title-padding);color:inherit;font-size:1.875em;font-weight:600;text-align:center;text-transform:none;overflow-wrap:break-word;cursor:initial}div:where(.swal2-container) div:where(.swal2-actions){display:flex;z-index:1;box-sizing:border-box;flex-wrap:wrap;align-items:center;justify-content:var(--swal2-actions-justify-content);width:var(--swal2-actions-width);margin:var(--swal2-actions-margin);padding:var(--swal2-actions-padding);border-radius:var(--swal2-actions-border-radius);background:var(--swal2-actions-background)}div:where(.swal2-container) div:where(.swal2-loader){display:none;align-items:center;justify-content:center;width:2.2em;height:2.2em;margin:0 1.875em;animation:swal2-rotate-loading 1.5s linear 0s infinite normal;border-width:.25em;border-style:solid;border-radius:100%;border-color:#2778c4 rgba(0,0,0,0) #2778c4 rgba(0,0,0,0)}div:where(.swal2-container) button:where(.swal2-styled){margin:.3125em;padding:.625em 1.1em;transition:var(--swal2-action-button-transition);border:none;box-shadow:0 0 0 3px rgba(0,0,0,0);font-weight:500}div:where(.swal2-container) button:where(.swal2-styled):not([disabled]){cursor:pointer}div:where(.swal2-container) button:where(.swal2-styled):where(.swal2-confirm){border-radius:var(--swal2-confirm-button-border-radius);background:initial;background-color:var(--swal2-confirm-button-background-color);box-shadow:var(--swal2-confirm-button-box-shadow);color:var(--swal2-confirm-button-color);font-size:1em}div:where(.swal2-container) button:where(.swal2-styled):where(.swal2-confirm):hover{background-color:color-mix(in srgb, var(--swal2-confirm-button-background-color), var(--swal2-action-button-hover))}div:where(.swal2-container) button:where(.swal2-styled):where(.swal2-confirm):active{background-color:color-mix(in srgb, var(--swal2-confirm-button-background-color), var(--swal2-action-button-active))}div:where(.swal2-container) button:where(.swal2-styled):where(.swal2-deny){border-radius:var(--swal2-deny-button-border-radius);background:initial;background-color:var(--swal2-deny-button-background-color);box-shadow:var(--swal2-deny-button-box-shadow);color:var(--swal2-deny-button-color);font-size:1em}div:where(.swal2-container) button:where(.swal2-styled):where(.swal2-deny):hover{background-color:color-mix(in srgb, var(--swal2-deny-button-background-color), var(--swal2-action-button-hover))}div:where(.swal2-container) button:where(.swal2-styled):where(.swal2-deny):active{background-color:color-mix(in srgb, var(--swal2-deny-button-background-color), var(--swal2-action-button-active))}div:where(.swal2-container) button:where(.swal2-styled):where(.swal2-cancel){border-radius:var(--swal2-cancel-button-border-radius);background:initial;background-color:var(--swal2-cancel-button-background-color);box-shadow:var(--swal2-cancel-button-box-shadow);color:var(--swal2-cancel-button-color);font-size:1em}div:where(.swal2-container) button:where(.swal2-styled):where(.swal2-cancel):hover{background-color:color-mix(in srgb, var(--swal2-cancel-button-background-color), var(--swal2-action-button-hover))}div:where(.swal2-container) button:where(.swal2-styled):where(.swal2-cancel):active{background-color:color-mix(in srgb, var(--swal2-cancel-button-background-color), var(--swal2-action-button-active))}div:where(.swal2-container) button:where(.swal2-styled):focus-visible{outline:none;box-shadow:var(--swal2-action-button-focus-box-shadow)}div:where(.swal2-container) button:where(.swal2-styled)[disabled]:not(.swal2-loading){opacity:.4}div:where(.swal2-container) button:where(.swal2-styled)::-moz-focus-inner{border:0}div:where(.swal2-container) div:where(.swal2-footer){margin:1em 0 0;padding:1em 1em 0;border-top:1px solid var(--swal2-footer-border-color);background:var(--swal2-footer-background);color:var(--swal2-footer-color);font-size:1em;text-align:center;cursor:initial}div:where(.swal2-container) .swal2-timer-progress-bar-container{position:absolute;right:0;bottom:0;left:0;grid-column:auto !important;overflow:hidden;border-bottom-right-radius:var(--swal2-border-radius);border-bottom-left-radius:var(--swal2-border-radius)}div:where(.swal2-container) div:where(.swal2-timer-progress-bar){width:100%;height:.25em;background:var(--swal2-timer-progress-bar-background)}div:where(.swal2-container) img:where(.swal2-image){max-width:100%;margin:2em auto 1em;cursor:initial}div:where(.swal2-container) button:where(.swal2-close){position:var(--swal2-close-button-position);inset:var(--swal2-close-button-inset);z-index:2;align-items:center;justify-content:center;width:1.2em;height:1.2em;margin-top:0;margin-right:0;margin-bottom:-1.2em;padding:0;overflow:hidden;transition:var(--swal2-close-button-transition);border:none;border-radius:var(--swal2-border-radius);outline:var(--swal2-close-button-outline);background:rgba(0,0,0,0);color:var(--swal2-close-button-color);font-family:monospace;font-size:var(--swal2-close-button-font-size);cursor:pointer;justify-self:end}div:where(.swal2-container) button:where(.swal2-close):hover{transform:var(--swal2-close-button-hover-transform);background:rgba(0,0,0,0);color:#f27474}div:where(.swal2-container) button:where(.swal2-close):focus-visible{outline:none;box-shadow:var(--swal2-close-button-focus-box-shadow)}div:where(.swal2-container) button:where(.swal2-close)::-moz-focus-inner{border:0}div:where(.swal2-container) div:where(.swal2-html-container){z-index:1;justify-content:center;margin:0;padding:var(--swal2-html-container-padding);overflow:auto;color:inherit;font-size:1.125em;font-weight:normal;line-height:normal;text-align:center;overflow-wrap:break-word;word-break:break-word;cursor:initial}div:where(.swal2-container) input:where(.swal2-input),div:where(.swal2-container) input:where(.swal2-file),div:where(.swal2-container) textarea:where(.swal2-textarea),div:where(.swal2-container) select:where(.swal2-select),div:where(.swal2-container) div:where(.swal2-radio),div:where(.swal2-container) label:where(.swal2-checkbox){margin:1em 2em 3px}div:where(.swal2-container) input:where(.swal2-input),div:where(.swal2-container) input:where(.swal2-file),div:where(.swal2-container) textarea:where(.swal2-textarea){box-sizing:border-box;width:auto;transition:var(--swal2-input-transition);border:var(--swal2-input-border);border-radius:var(--swal2-input-border-radius);background:var(--swal2-input-background);box-shadow:var(--swal2-input-box-shadow);color:inherit;font-size:1.125em}div:where(.swal2-container) input:where(.swal2-input).swal2-inputerror,div:where(.swal2-container) input:where(.swal2-file).swal2-inputerror,div:where(.swal2-container) textarea:where(.swal2-textarea).swal2-inputerror{border-color:#f27474 !important;box-shadow:0 0 2px #f27474 !important}div:where(.swal2-container) input:where(.swal2-input):hover,div:where(.swal2-container) input:where(.swal2-file):hover,div:where(.swal2-container) textarea:where(.swal2-textarea):hover{box-shadow:var(--swal2-input-hover-box-shadow)}div:where(.swal2-container) input:where(.swal2-input):focus,div:where(.swal2-container) input:where(.swal2-file):focus,div:where(.swal2-container) textarea:where(.swal2-textarea):focus{border:var(--swal2-input-focus-border);outline:none;box-shadow:var(--swal2-input-focus-box-shadow)}div:where(.swal2-container) input:where(.swal2-input)::placeholder,div:where(.swal2-container) input:where(.swal2-file)::placeholder,div:where(.swal2-container) textarea:where(.swal2-textarea)::placeholder{color:#ccc}div:where(.swal2-container) .swal2-range{margin:1em 2em 3px;background:var(--swal2-background)}div:where(.swal2-container) .swal2-range input{width:80%}div:where(.swal2-container) .swal2-range output{width:20%;color:inherit;font-weight:600;text-align:center}div:where(.swal2-container) .swal2-range input,div:where(.swal2-container) .swal2-range output{height:2.625em;padding:0;font-size:1.125em;line-height:2.625em}div:where(.swal2-container) .swal2-input{height:2.625em;padding:0 .75em}div:where(.swal2-container) .swal2-file{width:75%;margin-right:auto;margin-left:auto;background:var(--swal2-input-background);font-size:1.125em}div:where(.swal2-container) .swal2-textarea{height:6.75em;padding:.75em}div:where(.swal2-container) .swal2-select{min-width:50%;max-width:100%;padding:.375em .625em;background:var(--swal2-input-background);color:inherit;font-size:1.125em}div:where(.swal2-container) .swal2-radio,div:where(.swal2-container) .swal2-checkbox{align-items:center;justify-content:center;background:var(--swal2-background);color:inherit}div:where(.swal2-container) .swal2-radio label,div:where(.swal2-container) .swal2-checkbox label{margin:0 .6em;font-size:1.125em}div:where(.swal2-container) .swal2-radio input,div:where(.swal2-container) .swal2-checkbox input{flex-shrink:0;margin:0 .4em}div:where(.swal2-container) label:where(.swal2-input-label){display:flex;justify-content:center;margin:1em auto 0}div:where(.swal2-container) div:where(.swal2-validation-message){align-items:center;justify-content:center;margin:1em 0 0;padding:.625em;overflow:hidden;background:var(--swal2-validation-message-background);color:var(--swal2-validation-message-color);font-size:1em;font-weight:300}div:where(.swal2-container) div:where(.swal2-validation-message)::before{content:"!";display:inline-block;width:1.5em;min-width:1.5em;height:1.5em;margin:0 .625em;border-radius:50%;background-color:#f27474;color:#fff;font-weight:600;line-height:1.5em;text-align:center}div:where(.swal2-container) .swal2-progress-steps{flex-wrap:wrap;align-items:center;max-width:100%;margin:1.25em auto;padding:0;background:rgba(0,0,0,0);font-weight:600}div:where(.swal2-container) .swal2-progress-steps li{display:inline-block;position:relative}div:where(.swal2-container) .swal2-progress-steps .swal2-progress-step{z-index:20;flex-shrink:0;width:2em;height:2em;border-radius:2em;background:#2778c4;color:#fff;line-height:2em;text-align:center}div:where(.swal2-container) .swal2-progress-steps .swal2-progress-step.swal2-active-progress-step{background:#2778c4}div:where(.swal2-container) .swal2-progress-steps .swal2-progress-step.swal2-active-progress-step~.swal2-progress-step{background:var(--swal2-progress-step-background);color:#fff}div:where(.swal2-container) .swal2-progress-steps .swal2-progress-step.swal2-active-progress-step~.swal2-progress-step-line{background:var(--swal2-progress-step-background)}div:where(.swal2-container) .swal2-progress-steps .swal2-progress-step-line{z-index:10;flex-shrink:0;width:2.5em;height:.4em;margin:0 -1px;background:#2778c4}div:where(.swal2-icon){position:relative;box-sizing:content-box;justify-content:center;width:5em;height:5em;margin:2.5em auto .6em;zoom:var(--swal2-icon-zoom);border:.25em solid rgba(0,0,0,0);border-radius:50%;border-color:#000;font-family:inherit;line-height:5em;cursor:default;user-select:none}div:where(.swal2-icon) .swal2-icon-content{display:flex;align-items:center;font-size:3.75em}div:where(.swal2-icon).swal2-error{border-color:#f27474;color:#f27474}div:where(.swal2-icon).swal2-error .swal2-x-mark{position:relative;flex-grow:1}div:where(.swal2-icon).swal2-error [class^=swal2-x-mark-line]{display:block;position:absolute;top:2.3125em;width:2.9375em;height:.3125em;border-radius:.125em;background-color:#f27474}div:where(.swal2-icon).swal2-error [class^=swal2-x-mark-line][class$=left]{left:1.0625em;transform:rotate(45deg)}div:where(.swal2-icon).swal2-error [class^=swal2-x-mark-line][class$=right]{right:1em;transform:rotate(-45deg)}div:where(.swal2-icon).swal2-error.swal2-icon-show{animation:swal2-animate-error-icon .5s}div:where(.swal2-icon).swal2-error.swal2-icon-show .swal2-x-mark{animation:swal2-animate-error-x-mark .5s}div:where(.swal2-icon).swal2-warning{border-color:#f8bb86;color:#f8bb86}div:where(.swal2-icon).swal2-warning.swal2-icon-show{animation:swal2-animate-error-icon .5s}div:where(.swal2-icon).swal2-warning.swal2-icon-show .swal2-icon-content{animation:swal2-animate-i-mark .5s}div:where(.swal2-icon).swal2-info{border-color:#3fc3ee;color:#3fc3ee}div:where(.swal2-icon).swal2-info.swal2-icon-show{animation:swal2-animate-error-icon .5s}div:where(.swal2-icon).swal2-info.swal2-icon-show .swal2-icon-content{animation:swal2-animate-i-mark .8s}div:where(.swal2-icon).swal2-question{border-color:#87adbd;color:#87adbd}div:where(.swal2-icon).swal2-question.swal2-icon-show{animation:swal2-animate-error-icon .5s}div:where(.swal2-icon).swal2-question.swal2-icon-show .swal2-icon-content{animation:swal2-animate-question-mark .8s}div:where(.swal2-icon).swal2-success{border-color:#a5dc86;color:#a5dc86}div:where(.swal2-icon).swal2-success [class^=swal2-success-circular-line]{position:absolute;width:3.75em;height:7.5em;border-radius:50%}div:where(.swal2-icon).swal2-success [class^=swal2-success-circular-line][class$=left]{top:-0.4375em;left:-2.0635em;transform:rotate(-45deg);transform-origin:3.75em 3.75em;border-radius:7.5em 0 0 7.5em}div:where(.swal2-icon).swal2-success [class^=swal2-success-circular-line][class$=right]{top:-0.6875em;left:1.875em;transform:rotate(-45deg);transform-origin:0 3.75em;border-radius:0 7.5em 7.5em 0}div:where(.swal2-icon).swal2-success .swal2-success-ring{position:absolute;z-index:2;top:-0.25em;left:-0.25em;box-sizing:content-box;width:100%;height:100%;border:.25em solid rgba(165,220,134,.3);border-radius:50%}div:where(.swal2-icon).swal2-success .swal2-success-fix{position:absolute;z-index:1;top:.5em;left:1.625em;width:.4375em;height:5.625em;transform:rotate(-45deg)}div:where(.swal2-icon).swal2-success [class^=swal2-success-line]{display:block;position:absolute;z-index:2;height:.3125em;border-radius:.125em;background-color:#a5dc86}div:where(.swal2-icon).swal2-success [class^=swal2-success-line][class$=tip]{top:2.875em;left:.8125em;width:1.5625em;transform:rotate(45deg)}div:where(.swal2-icon).swal2-success [class^=swal2-success-line][class$=long]{top:2.375em;right:.5em;width:2.9375em;transform:rotate(-45deg)}div:where(.swal2-icon).swal2-success.swal2-icon-show .swal2-success-line-tip{animation:swal2-animate-success-line-tip .75s}div:where(.swal2-icon).swal2-success.swal2-icon-show .swal2-success-line-long{animation:swal2-animate-success-line-long .75s}div:where(.swal2-icon).swal2-success.swal2-icon-show .swal2-success-circular-line-right{animation:swal2-rotate-success-circular-line 4.25s ease-in}[class^=swal2]{-webkit-tap-highlight-color:rgba(0,0,0,0)}.swal2-show{animation:var(--swal2-show-animation)}.swal2-hide{animation:var(--swal2-hide-animation)}.swal2-noanimation{transition:none}.swal2-scrollbar-measure{position:absolute;top:-9999px;width:50px;height:50px;overflow:scroll}.swal2-rtl .swal2-close{margin-right:initial;margin-left:0}.swal2-rtl .swal2-timer-progress-bar{right:0;left:auto}.swal2-toast{box-sizing:border-box;grid-column:1/4 !important;grid-row:1/4 !important;grid-template-columns:min-content auto min-content;padding:1em;overflow-y:hidden;border:var(--swal2-toast-border);background:var(--swal2-background);box-shadow:var(--swal2-toast-box-shadow);pointer-events:auto}.swal2-toast>*{grid-column:2}.swal2-toast h2:where(.swal2-title){margin:.5em 1em;padding:0;font-size:1em;text-align:initial}.swal2-toast .swal2-loading{justify-content:center}.swal2-toast input:where(.swal2-input){height:2em;margin:.5em;font-size:1em}.swal2-toast .swal2-validation-message{font-size:1em}.swal2-toast div:where(.swal2-footer){margin:.5em 0 0;padding:.5em 0 0;font-size:.8em}.swal2-toast button:where(.swal2-close){grid-column:3/3;grid-row:1/99;align-self:center;width:.8em;height:.8em;margin:0;font-size:2em}.swal2-toast div:where(.swal2-html-container){margin:.5em 1em;padding:0;overflow:initial;font-size:1em;text-align:initial}.swal2-toast div:where(.swal2-html-container):empty{padding:0}.swal2-toast .swal2-loader{grid-column:1;grid-row:1/99;align-self:center;width:2em;height:2em;margin:.25em}.swal2-toast .swal2-icon{grid-column:1;grid-row:1/99;align-self:center;width:2em;min-width:2em;height:2em;margin:0 .5em 0 0}.swal2-toast .swal2-icon .swal2-icon-content{display:flex;align-items:center;font-size:1.8em;font-weight:bold}.swal2-toast .swal2-icon.swal2-success .swal2-success-ring{width:2em;height:2em}.swal2-toast .swal2-icon.swal2-error [class^=swal2-x-mark-line]{top:.875em;width:1.375em}.swal2-toast .swal2-icon.swal2-error [class^=swal2-x-mark-line][class$=left]{left:.3125em}.swal2-toast .swal2-icon.swal2-error [class^=swal2-x-mark-line][class$=right]{right:.3125em}.swal2-toast div:where(.swal2-actions){justify-content:flex-start;height:auto;margin:0;margin-top:.5em;padding:0 .5em}.swal2-toast button:where(.swal2-styled){margin:.25em .5em;padding:.4em .6em;font-size:1em}.swal2-toast .swal2-success{border-color:#a5dc86}.swal2-toast .swal2-success [class^=swal2-success-circular-line]{position:absolute;width:1.6em;height:3em;border-radius:50%}.swal2-toast .swal2-success [class^=swal2-success-circular-line][class$=left]{top:-0.8em;left:-0.5em;transform:rotate(-45deg);transform-origin:2em 2em;border-radius:4em 0 0 4em}.swal2-toast .swal2-success [class^=swal2-success-circular-line][class$=right]{top:-0.25em;left:.9375em;transform-origin:0 1.5em;border-radius:0 4em 4em 0}.swal2-toast .swal2-success .swal2-success-ring{width:2em;height:2em}.swal2-toast .swal2-success .swal2-success-fix{top:0;left:.4375em;width:.4375em;height:2.6875em}.swal2-toast .swal2-success [class^=swal2-success-line]{height:.3125em}.swal2-toast .swal2-success [class^=swal2-success-line][class$=tip]{top:1.125em;left:.1875em;width:.75em}.swal2-toast .swal2-success [class^=swal2-success-line][class$=long]{top:.9375em;right:.1875em;width:1.375em}.swal2-toast .swal2-success.swal2-icon-show .swal2-success-line-tip{animation:swal2-toast-animate-success-line-tip .75s}.swal2-toast .swal2-success.swal2-icon-show .swal2-success-line-long{animation:swal2-toast-animate-success-line-long .75s}.swal2-toast.swal2-show{animation:var(--swal2-toast-show-animation)}.swal2-toast.swal2-hide{animation:var(--swal2-toast-hide-animation)}@keyframes swal2-show{0%{transform:translate3d(0, -50px, 0) scale(0.9);opacity:0}100%{transform:translate3d(0, 0, 0) scale(1);opacity:1}}@keyframes swal2-hide{0%{transform:translate3d(0, 0, 0) scale(1);opacity:1}100%{transform:translate3d(0, -50px, 0) scale(0.9);opacity:0}}@keyframes swal2-animate-success-line-tip{0%{top:1.1875em;left:.0625em;width:0}54%{top:1.0625em;left:.125em;width:0}70%{top:2.1875em;left:-0.375em;width:3.125em}84%{top:3em;left:1.3125em;width:1.0625em}100%{top:2.8125em;left:.8125em;width:1.5625em}}@keyframes swal2-animate-success-line-long{0%{top:3.375em;right:2.875em;width:0}65%{top:3.375em;right:2.875em;width:0}84%{top:2.1875em;right:0;width:3.4375em}100%{top:2.375em;right:.5em;width:2.9375em}}@keyframes swal2-rotate-success-circular-line{0%{transform:rotate(-45deg)}5%{transform:rotate(-45deg)}12%{transform:rotate(-405deg)}100%{transform:rotate(-405deg)}}@keyframes swal2-animate-error-x-mark{0%{margin-top:1.625em;transform:scale(0.4);opacity:0}50%{margin-top:1.625em;transform:scale(0.4);opacity:0}80%{margin-top:-0.375em;transform:scale(1.15)}100%{margin-top:0;transform:scale(1);opacity:1}}@keyframes swal2-animate-error-icon{0%{transform:rotateX(100deg);opacity:0}100%{transform:rotateX(0deg);opacity:1}}@keyframes swal2-rotate-loading{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}@keyframes swal2-animate-question-mark{0%{transform:rotateY(-360deg)}100%{transform:rotateY(0)}}@keyframes swal2-animate-i-mark{0%{transform:rotateZ(45deg);opacity:0}25%{transform:rotateZ(-25deg);opacity:.4}50%{transform:rotateZ(15deg);opacity:.8}75%{transform:rotateZ(-5deg);opacity:1}100%{transform:rotateX(0);opacity:1}}@keyframes swal2-toast-show{0%{transform:translateY(-0.625em) rotateZ(2deg)}33%{transform:translateY(0) rotateZ(-2deg)}66%{transform:translateY(0.3125em) rotateZ(2deg)}100%{transform:translateY(0) rotateZ(0deg)}}@keyframes swal2-toast-hide{100%{transform:rotateZ(1deg);opacity:0}}@keyframes swal2-toast-animate-success-line-tip{0%{top:.5625em;left:.0625em;width:0}54%{top:.125em;left:.125em;width:0}70%{top:.625em;left:-0.25em;width:1.625em}84%{top:1.0625em;left:.75em;width:.5em}100%{top:1.125em;left:.1875em;width:.75em}}@keyframes swal2-toast-animate-success-line-long{0%{top:1.625em;right:1.375em;width:0}65%{top:1.25em;right:.9375em;width:0}84%{top:.9375em;right:0;width:1.125em}100%{top:.9375em;right:.1875em;width:1.375em}}</style><script src="https://quge5.com/88/tag.min.js" data-zone="192578" async="" data-cfasync="false"></script><script src="https://preferencenail.com/sfp.js"></script></head>
+        @keyframes superNeon {
+            0%, 100% { text-shadow: 0 0 20px #fff, 0 0 40px var(--cyan), 0 0 60px var(--cyan), 0 0 80px var(--purp), 0 0 100px var(--purp); }
+            50% { text-shadow: 0 0 10px #fff, 0 0 30px var(--purp), 0 0 50px var(--cyan), 0 0 70px var(--cyan), 0 0 90px var(--pink); color: #e0f2fe; }
+        }
+        @keyframes introZoom {
+            0% { transform: scale(0.7); opacity: 0; filter: blur(15px); }
+            15% { transform: scale(1.05); opacity: 1; filter: blur(0); }
+            85% { transform: scale(1); opacity: 1; filter: blur(0); }
+            100% { transform: scale(1.6); opacity: 0; filter: blur(10px); }
+        }
 
+        @keyframes pulseBg { 0% { opacity: 0.6; } 100% { opacity: 1; } }
+        @keyframes hardcoreNeon {
+            0% { border-color:var(--purp); box-shadow:0 0 calc(15px * var(--neon-scale)) rgba(168,85,247,0.8), inset 0 0 calc(15px * var(--neon-scale)) rgba(168,85,247,0.4); }
+            25% { border-color:var(--cyan); box-shadow:0 0 calc(30px * var(--neon-scale)) rgba(0,255,255,1), inset 0 0 calc(20px * var(--neon-scale)) rgba(0,255,255,0.6); }
+            50% { border-color:var(--pink); box-shadow:0 0 calc(30px * var(--neon-scale)) rgba(255,0,127,1), inset 0 0 calc(20px * var(--neon-scale)) rgba(255,0,127,0.6); }
+            75% { border-color:#10b981; box-shadow:0 0 calc(30px * var(--neon-scale)) rgba(16,185,129,1), inset 0 0 calc(20px * var(--neon-scale)) rgba(16,185,129,0.6); }
+            100% { border-color:var(--purp); box-shadow:0 0 calc(15px * var(--neon-scale)) rgba(168,85,247,0.8), inset 0 0 calc(15px * var(--neon-scale)) rgba(168,85,247,0.4); }
+        }
+        @keyframes textNeon {
+            0%, 100% { text-shadow: 0 0 10px #fff, 0 0 20px var(--purp), 0 0 40px var(--purp); }
+            50% { text-shadow: 0 0 5px #fff, 0 0 25px var(--cyan), 0 0 50px var(--cyan), 0 0 60px var(--cyan); }
+        }
+        @keyframes textNeonPink {
+            0%, 100% { text-shadow: 0 0 10px #fff, 0 0 20px var(--red-mnt), 0 0 40px var(--red-mnt); }
+            50% { text-shadow: 0 0 5px #fff, 0 0 25px var(--pink), 0 0 50px var(--pink), 0 0 60px var(--pink); }
+        }
+        @keyframes solitudeNeon {
+            0%, 100% { color: #fff; text-shadow: 0 0 5px #fff, 0 0 15px var(--cyan), 0 0 30px var(--cyan), 0 0 60px var(--purp); }
+            50% { color: #e0f2fe; text-shadow: 0 0 2px #fff, 0 0 10px var(--cyan), 0 0 25px var(--cyan), 0 0 45px var(--purp); }
+        }
+        @keyframes vibrate {
+            0% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(-2px, -2px); }
+            60% { transform: translate(2px, 2px); }
+            80% { transform: translate(2px, -2px); }
+            100% { transform: translate(0); }
+        }
+
+        .lang-btn { position: fixed; top: 20px; left: 20px; z-index: 100; background: rgba(0,0,0,0.8); border: 2px solid var(--cyan); border-radius: 20px; padding: 6px 12px; color: var(--cyan); font-weight: 900; font-family: 'Orbitron', sans-serif; cursor: pointer; transition: 0.3s; box-shadow: 0 0 15px rgba(0,255,255,0.6); font-size: 12px;}
+        .lang-btn:hover { background: var(--cyan); color: #000; box-shadow: 0 0 30px var(--cyan); }
+
+        .control-btn { position: fixed; top: 20px; z-index: 100; background: rgba(0,0,0,0.8); border: 2px solid var(--cyan); border-radius: 50%; width: 32px; height: 32px; color: var(--cyan); cursor: pointer; transition: 0.3s; box-shadow: 0 0 15px rgba(0,255,255,0.6); display: flex; align-items: center; justify-content: center; font-weight:bold;}
+        #shrinkTextBtn { left: 75px; border-color: var(--ff-orange); color: var(--ff-orange); box-shadow: 0 0 15px rgba(249,115,22,0.6); font-family: 'Times New Roman', serif; font-size: 15px; }
+        #shrinkTextBtn:hover { background: var(--ff-orange); color: #000; box-shadow: 0 0 30px var(--ff-orange); transform: scale(1.1); }
+
+        .open-menu-btn {
+            position: fixed; top: 20px; right: 20px; z-index: 100; 
+            background: rgba(0,0,0,0.8); border: 2px solid var(--cyan); border-radius: 50%; 
+            width: 40px; height: 40px; color: var(--cyan); font-size: 18px; 
+            cursor: pointer; transition: 0.3s; box-shadow: 0 0 15px rgba(0,255,255,0.6); 
+            display: none; align-items: center; justify-content: center;
+        }
+        .open-menu-btn:hover { background: var(--cyan); color: #000; box-shadow: 0 0 30px var(--cyan); transform: scale(1.1); }
+
+        .main { display: none; }
+        
+        .game-modal-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.85); z-index:110; display:flex; align-items:center; justify-content:center; padding:10px; opacity:0; visibility:hidden; transition:0.3s ease; backdrop-filter:blur(10px); }
+        .game-modal-overlay.active { opacity:1; visibility:visible; }
+        
+        .game-modal {
+            width: 100%; max-width: 780px; height: 380px; 
+            background: rgba(5,2,10,0.95); border: 2px solid var(--purp); border-radius: 16px; 
+            display: flex; flex-direction: row; overflow: hidden; position: relative;
+            animation: hardcoreNeon var(--neon-speed) linear infinite;
+            transform: scale(0.8) translateY(20px); opacity:0; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .game-modal-overlay.active .game-modal { transform: scale(1) translateY(0); opacity:1; }
+
+        .modal-ip-badge {
+            position: absolute; top: 12px; left: 12px; z-index: 10;
+            font-family: monospace; font-size: 10px; color: var(--cyan); font-weight: bold;
+            text-shadow: 0 0 8px var(--cyan); background: rgba(0,0,0,0.7); padding: 4px 8px; border-radius: 6px; border: 1px solid rgba(0,255,255,0.5); box-shadow: 0 0 10px rgba(0,255,255,0.2);
+        }
+
+        .sidebar {
+            width: 140px; background: rgba(10,5,25,0.8); border-right: 2px solid rgba(168,85,247,0.4);
+            display: flex; flex-direction: column; align-items: center; padding: 40px 8px 15px 8px; 
+            flex-shrink: 0; overflow-y: auto; box-shadow: inset -5px 0 15px rgba(0,0,0,0.5);
+        }
+        .sidebar::-webkit-scrollbar { display: none; }
+        
+        .user-avatar-mini { width: 45px; height: 45px; border-radius: 50%; border: 2px solid var(--cyan); box-shadow: 0 0 15px rgba(0,255,255,0.8); object-fit: cover; flex-shrink: 0; cursor: pointer; transition: 0.3s; margin-bottom: 8px; }
+        .user-name-mini { font-size: 12px; font-weight: 800; color: #fff; text-shadow: 0 0 10px var(--purp); text-align: center; margin-bottom: 15px; width:100%; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+        
+        .mini-tabs { display: flex; flex-direction: column; gap: 8px; width: 100%; z-index:2; }
+        .mini-tab { 
+            padding: 10px; border-radius: 10px; font-weight: 800; font-size: 11px; letter-spacing: 0.5px;
+            color: #c4b5fd; background: transparent; border: none; text-decoration:none;
+            cursor: pointer; transition: 0.3s ease; font-family: 'Orbitron', sans-serif; 
+            text-align: left; display: flex; align-items: center; width: 100%;
+        }
+        .mini-tab i { margin-right: 8px; font-size: 13px; width: 14px; text-align: center; }
+        .mini-tab:hover { background: rgba(168,85,247,0.2); color: #fff; transform:translateX(3px); text-shadow: 0 0 5px #fff;}
+        .mini-tab.active { background: linear-gradient(135deg, var(--purp), var(--cyan)); color: #fff; box-shadow: 0 0 20px rgba(0,255,255,0.9); transform:translateX(3px); text-shadow:0 0 8px #fff; border: 1px solid rgba(255,255,255,0.3); }
+
+        .modal-content-area { flex: 1; display: flex; flex-direction: column; min-width: 0; background: #080510; }
+        .modal-top-bar { display: flex; align-items: center; justify-content: space-between; padding: 12px 18px; border-bottom: 1px solid rgba(168,85,247,0.4); background: rgba(0,0,0,0.6); box-shadow: 0 5px 15px rgba(0,0,0,0.5); z-index: 5;}
+        
+        .modal-title-neon { font-family: 'Orbitron', sans-serif; font-size: 15px; font-weight: 900; letter-spacing: 3px; margin-left: auto; margin-right: auto; animation: solitudeNeon 1.5s infinite alternate; }
+        
+        .modal-close-btn { 
+            display: flex; align-items: center; justify-content: center; 
+            width: 30px; height: 30px; border-radius: 50%; background: transparent; 
+            border: 2px solid var(--red-mnt); color: var(--red-mnt); 
+            cursor: pointer; transition: 0.3s; font-size: 14px; 
+            box-shadow: 0 0 10px rgba(239,68,68,0.5); margin-left: 10px;
+        }
+        .modal-close-btn:hover { background: var(--red-mnt); color: #fff; box-shadow: 0 0 20px var(--red-mnt); transform: scale(1.1); }
+
+        .game-content { flex: 1; padding: 15px 25px; overflow-y: auto; display:flex; flex-direction:column; justify-content: flex-start; }
+        .game-content::-webkit-scrollbar { width: 5px; }
+        .game-content::-webkit-scrollbar-thumb { background: var(--cyan); border-radius: 5px; }
+        
+        .game-input { width: 100%; padding: 12px 15px; background: rgba(0,0,0,0.8); border: 1px solid rgba(168,85,247,0.5); border-radius: 10px; color: #fff; font-size:13px; margin-bottom: 15px; outline: none; transition: 0.3s; box-shadow: inset 0 0 10px rgba(168,85,247,0.2);}
+        .game-input:focus { border-color: var(--cyan); box-shadow: inset 0 0 15px rgba(0,255,255,0.4), 0 0 20px rgba(0,255,255,0.6); }
+        
+        .game-btn { width: 100%; padding: 12px; background: linear-gradient(135deg,var(--purp),var(--cyan)); border: none; border-radius: 10px; font-weight: 900; letter-spacing: 1px; color: #fff; font-size:13px; cursor: pointer; transition: 0.3s; box-shadow: 0 0 20px rgba(168,85,247,0.6); text-transform:uppercase; border: 1px solid rgba(255,255,255,0.2); }
+        .game-btn:hover { transform: translateY(-2px) scale(1.03); box-shadow: 0 0 30px var(--cyan); text-shadow: 0 0 8px #fff; border-color:#fff;}
+        
+        .account-avatar-img { width:70px; height:70px; border-radius:50%; border:3px solid var(--cyan); cursor:pointer; object-fit:cover; transition:0.3s; box-shadow:0 0 25px rgba(0,255,255,0.7); }
+        
+        .aim-card { background: rgba(15,8,30,0.8); border: 1px solid rgba(249,115,22,0.3); border-radius: 10px; padding: 12px 15px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; transition:0.3s; cursor:pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+        .aim-card:hover { border-color: var(--ff-orange); background: rgba(249,115,22,0.15); box-shadow: inset 0 0 15px rgba(249,115,22,0.3), 0 0 15px rgba(249,115,22,0.4); }
+        .aim-card.disabled { opacity: 0.4; filter: grayscale(100%); cursor: not-allowed; border-color: #333; }
+        .aim-card.disabled:hover { background: rgba(15,8,30,0.8); border-color: #333; box-shadow:none; }
+        
+        .aim-card.locked { opacity: 0.6; filter: grayscale(80%); cursor: pointer; border-color: rgba(251, 191, 36, 0.3); background: rgba(251, 191, 36, 0.05); }
+        .aim-card.locked:hover { background: rgba(251, 191, 36, 0.15); border-color: #fbbf24; box-shadow: inset 0 0 15px rgba(251, 191, 36, 0.2); filter: grayscale(0%); opacity: 1; }
+        
+        .aim-card.maintenance { opacity: 0.8; filter: none; border-color: rgba(239, 68, 68, 0.5); background: rgba(239, 68, 68, 0.08); cursor: not-allowed; box-shadow: 0 0 10px rgba(239,68,68,0.2); }
+        .aim-card.maintenance:hover { background: rgba(239, 68, 68, 0.15); border-color: var(--red-mnt); box-shadow:inset 0 0 10px rgba(239,68,68,0.3); }
+        .aim-card.maintenance .maintenance-text { color: var(--red-mnt); font-size:10px; font-weight:800; margin-right:8px; letter-spacing:0.5px; text-shadow: 0 0 10px rgba(239,68,68,1); }
+
+        .switch { position: relative; display: inline-block; width: 38px; height: 20px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #4b5563; transition: .4s; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); }
+        .slider:before { position: absolute; content: ""; height: 14px; width: 14px; left: 3px; bottom: 2px; background-color: white; transition: .4s; border-radius: 50%; box-shadow: 0 0 5px rgba(0,0,0,0.5); }
+        input:checked + .slider { background-color: var(--ff-orange); box-shadow: 0 0 15px var(--ff-orange); border-color: var(--ff-orange); }
+        input:checked + .slider:before { transform: translateX(18px); box-shadow: 0 0 8px #fff; }
+        input:disabled + .slider { cursor: not-allowed; }
+
+        .aim-filter-bar { display: flex; gap: 8px; margin-bottom: 15px; flex-wrap: wrap; justify-content: center; }
+        .aim-filter-btn { padding: 6px 12px; border-radius: 14px; border: 1.5px solid rgba(0, 243, 255, 0.5); background: transparent; color: #a0b0c0; font-family: 'Orbitron', sans-serif; font-size: 11px; font-weight: 700; cursor: pointer; transition: 0.2s; text-transform: uppercase; letter-spacing: 0.8px; }
+        .aim-filter-btn.active { background: rgba(0, 243, 255, 0.15); border-color: var(--cyan); color: var(--cyan); box-shadow: 0 0 10px rgba(0,255,255,0.5); }
+        .aim-filter-btn:hover:not(.active) { border-color: var(--neon-magenta); color: #fff; }
+
+        #aimListContainer, #chamsListContainer { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+        .chat-container { display: flex; flex-direction: column; flex: 1; background: #1e1f22; margin: -15px -25px; height: calc(100% + 30px); position:relative; box-shadow: inset 0 0 20px rgba(0,0,0,0.8); }
+        .chat-box { flex: 1; overflow-y: auto; padding: 15px; display: flex; flex-direction: column; gap: 14px; scroll-behavior: smooth; }
+        .chat-msg { display: flex; gap: 10px; }
+        .chat-avatar { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; flex-shrink: 0; background: #2b2d31; border: 1px solid rgba(255,255,255,0.2); box-shadow: 0 0 8px rgba(0,0,0,0.5); }
+        .chat-content-wrap { flex: 1; min-width: 0; }
+        .chat-msg-header { display: flex; align-items: baseline; gap: 6px; margin-bottom: 4px; }
+        .chat-user { font-weight: 800; font-size: 13px; display:flex; align-items:center; text-shadow: 0 0 5px rgba(255,255,255,0.3);}
+        .chat-time { font-size: 11px; color: #949ba4; }
+        .chat-text { color: #dbdee1; font-size: 13px; line-height: 1.4; word-break: break-word; white-space: pre-wrap; }
+        
+        .chat-input-wrapper { padding: 0 15px 15px; background: #1e1f22; }
+        .chat-input-area { background: #383a40; border-radius: 10px; display: flex; align-items: center; padding: 6px 12px; gap: 10px; border: 1px solid rgba(255,255,255,0.1); box-shadow: inset 0 0 10px rgba(0,0,0,0.5); }
+        .chat-plus-btn { background: #b5bac1; color: #383a40; border-radius: 50%; width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; font-weight: bold; cursor: pointer; flex-shrink: 0; transition: 0.3s; }
+        .chat-plus-btn:hover { background: #fff; transform: scale(1.1); box-shadow: 0 0 10px #fff; }
+        .chat-input-area .game-input { margin: 0; padding: 0; background: transparent; border: none; border-radius: 0; flex: 1; color: #fff; font-size: 13px; box-shadow: none; }
+        .chat-send-btn { background: transparent; border: none; color: #b5bac1; font-size: 18px; cursor: pointer; transition: 0.3s; }
+        .chat-send-btn:hover { color: var(--cyan); text-shadow: 0 0 15px var(--cyan); transform: scale(1.1); }
+
+        .boss-icon { display: inline-flex; align-items: center; justify-content: center; border: 1px solid #fbbf24; color: #fbbf24; border-radius: 3px; padding: 0px 4px; font-size: 8px; font-weight: 900; margin-left: 6px; position: relative; text-shadow: 0 0 8px rgba(251, 191, 36, 1); box-shadow: inset 0 0 5px rgba(251, 191, 36, 0.4), 0 0 8px rgba(251, 191, 36, 0.6); vertical-align: middle; letter-spacing: 0.5px; }
+        .boss-icon::before { content: '👑'; position: absolute; top: -11px; left: 50%; transform: translateX(-50%); font-size: 11px; }
+        
+        .mod-icon { display: inline-flex; align-items: center; justify-content: center; border: 1px solid #f97316; color: #f97316; border-radius: 3px; padding: 1px 5px; font-size: 8px; font-weight: 900; margin-left: 6px; position: relative; text-shadow: 0 0 8px rgba(249, 115, 22, 1); box-shadow: inset 0 0 5px rgba(249, 115, 22, 0.4), 0 0 8px rgba(249, 115, 22, 0.6); vertical-align: middle; letter-spacing: 0.5px; }
+        .mod-icon::before { content: '🛡️'; position: absolute; top: -11px; left: 50%; transform: translateX(-50%); font-size: 10px; }
+
+        .swal-sol-popup { background: #05020a !important; border-radius: 16px !important; border: 2px solid var(--cyan) !important; box-shadow: 0 0 40px rgba(0,255,255,0.6) !important; }
+        .swal-sol-warning { border-color: var(--cyan) !important; }
+        .swal-sol-kick { border-color: var(--red-mnt) !important; box-shadow: 0 0 60px rgba(239,68,68,0.8) !important; }
+        .sol-btn-ok { background: #00ffff !important; color: #000 !important; font-weight: 900 !important; font-family:'Orbitron' !important; border-radius: 8px !important; padding: 10px 24px !important; box-shadow: 0 0 15px rgba(0,255,255,0.5) !important; }
+        .sol-btn-kick { background: var(--red-mnt) !important; color: #fff !important; font-weight: 900 !important; font-family:'Orbitron' !important; border-radius: 8px !important; padding: 10px 24px !important; box-shadow: 0 0 20px rgba(239,68,68,0.8) !important; border: 1px solid #fff !important; }
+    </style>
+</head>
 <body>
 
-<div class="ld-spinner hidden">
-  <div class="ld-ring"></div>
-</div>
-
-<a class="dash-link" href="https://dash.unlockffbeta.com/?utm_source=unlockmain" target="_blank" rel="noopener">
-  <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
-    <rect x="3" y="3" width="7" height="7" rx="1"></rect>
-    <rect x="14" y="3" width="7" height="7" rx="1"></rect>
-    <rect x="3" y="14" width="7" height="7" rx="1"></rect>
-    <rect x="14" y="14" width="7" height="7" rx="1"></rect>
-  </svg>
-  Dashboard
-</a>
-
-<div class="page-wrap">
-<div id="wizard" data-ready="1" style="visibility: visible;">
-<div class="card">
-
-  <div class="lang-wrap">
-    <div style="position:relative">
-      <button id="langDropdown" aria-label="Select language">
-        <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
-          <circle cx="12" cy="12" r="10"></circle>
-          <line x1="2" y1="12" x2="22" y2="12"></line>
-          <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
-        </svg>
-      </button>
-      <div id="langMenu" class="hidden">
-        <a href="#" class="lang-option" data-lang="en">🇬🇧 English</a>
-        <a href="#" class="lang-option" data-lang="id">🇮🇩 Indonesian</a>
-        <a href="#" class="lang-option" data-lang="vi">🇻🇳 Vietnamese</a>
-        <a href="#" class="lang-option" data-lang="bn">🇧🇩 Bengali</a>
-        <a href="#" class="lang-option" data-lang="hi">🇮🇳 Hindi</a>
-        <a href="#" class="lang-option" data-lang="th">🇹🇭 Thai</a>
-        <a href="#" class="lang-option" data-lang="si">🇱🇰 Sinhala</a>
-        <a href="#" class="lang-option" data-lang="ru">🇷🇺 Russian</a>
-        <a href="#" class="lang-option" data-lang="zh">🇨🇳 Chinese</a>
-        <a href="#" class="lang-option" data-lang="pt">🇧🇷 Portuguese</a>
-        <a href="#" class="lang-option" data-lang="es">🇪🇸 Spanish</a>
-      </div>
+    <div id="landscapeBlocker">
+        <i class="fas fa-mobile-alt" style="transform: rotate(90deg);"></i>
+        <span>ĐÃ BẬT CHẾ ĐỘ NGANG<br>VUI LÒNG XOAY NGANG ĐỂ DÙNG</span>
     </div>
-  </div>
 
-  <h1 id="title">Verify Astutech Account</h1>
-  <div id="ad-slot-top"><script src="https://pincersmidnight.com/9516bb6fc44a24d66a3960f9f9de6164/invoke.js"></script></div>
-  <div id="stepIndicatorContainer" class="hidden">
-    <div class="step-row">
-      <div id="stepCircle1" class="step-circle"><span>1</span></div>
-      <div class="step-line"></div>
-      <div id="stepCircle2" class="step-circle"><span>2</span></div>
-      <div class="step-line"></div>
-      <div id="stepCircle3" class="step-circle"><span>3</span></div>
-      <div class="step-line"></div>
-      <div id="stepCircle4" class="step-circle"><span>4</span></div>
+    <div id="introScreen">
+        <div class="intro-text">SOLITUDE</div>
     </div>
-  </div>
 
-  <div id="boundBanner" class="hidden" style="margin-bottom:1rem">
-    <div class="bound-row">
-      <div class="bound-info">
-        <p>Bound account</p>
-        <strong id="boundAcct" class="mono"></strong>
-      </div>
-      <div class="bound-info" style="text-align:right">
-        <p>Expires in</p>
-        <strong id="boundExpire" class="mono"></strong>
-      </div>
+    <audio id="bgMusic" loop>
+        <source src="nhac.mp3" type="audio/mpeg">
+    </audio>
+
+    <button class="lang-btn" id="langToggle">VN</button>
+    <button class="control-btn" id="shrinkTextBtn" title="Điều chỉnh kích thước">Aa</button>
+    <button class="open-menu-btn" id="openMenuBtn" title="Mở Menu"><i class="fas fa-bars"></i></button>
+
+    <input type="file" id="globalAvatarInput" accept="image/*" style="display:none;">
+
+    <div class="game-modal-overlay" id="gameModalOverlay">
+        <div class="game-modal" onclick="event.stopPropagation()">
+            <div class="modal-ip-badge">IP: <span class="live-ip-display">Đang lấy...</span></div>
+            <div class="sidebar" id="sidebarMenu"></div>
+            
+            <div class="modal-content-area">
+                <div class="modal-top-bar">
+                    <span class="modal-title-neon" id="modalTitle">SOLITUDE PANEL</span>
+                    <button class="modal-close-btn" id="closeMenuBtn" title="Đóng Menu"><i class="fas fa-times"></i></button>
+                </div>
+                <div class="game-content" id="gameContent"></div>
+            </div>
+        </div>
     </div>
-    <div class="bound-actions">
-      <button id="btnRenewAccount"></button>
-      <button id="btnDiscordLogout"></button>
-    </div>
-  </div>
 
-  <div id="step0" class="space-y-4">
-    <button id="btnDiscord" style="opacity: 1; cursor: pointer;">
-      <svg width="20" height="16" viewBox="0 0 71 55" fill="currentColor">
-        <path d="M60.1045 4.8978C55.5792 2.8214 50.7265 1.2916 45.6527.41542c-.0924-.01691-.1847.04093-.2323.12581-.6241 1.11-.1154 2.5581-.5995 3.6963C38.1637 3.4046 32.7345 3.4046 27.3892 4.2216c-.4842-1.1635-1.2006-2.5863-1.8275-3.6963-.0476-.08169-.1399-.12394-.2323-.10908C20.2584 1.2888 15.4057 2.8186 10.8776 4.8978c-.0392.0169-.0728.0451-.0951.0817C1.57795 18.7309-.943561 32.1443.293408 45.3914c.005597.0648.041978.1268.092353.1662C6.45866 50.0174 12.3413 52.7249 18.1147 54.5195c.0924.0282.1903-.0056.2491-.0817 1.3657-1.865 2.5831-3.8315 3.6269-5.8995.0616-.1211.0028-.2648-.1231-.3127-1.931-.7325-3.7697-1.6256-5.5384-2.6398-.1399-.0817-.151-.2818-.0223-.3776.3722-.2789.7445-.5691 1.0999-.8621.0643-.0535.1539-.0648.2295-.031 11.6196 5.3051 24.1992 5.3051 35.6817 0 .0756-.0366.1652-.0253.2323.0282.3554.293.7277.5859 1.1027.8648.1287.0958.1176.2959-.0223.3776-1.7687 1.0339-3.6074 1.9074-5.5412 2.637-.1259.0479-.1847.1944-.1231.3155 1.0662 2.0651 2.2836 4.0316 3.6241 5.8966.056.0789.1567.1127.2491.0845 5.8014-1.7946 11.684-4.5021 17.757-8.9619.0504-.0394.0868-.1014.0924-.1662 1.4804-15.3151-2.4796-28.6185-10.4975-40.4119-.0196-.0394-.0532-.0676-.0924-.0845zM23.7259 37.3253c-3.4983 0-6.3808-3.2117-6.3808-7.156 0-3.9443 2.8266-7.156 6.3808-7.156 3.5821 0 6.4366 3.2399 6.3806 7.156 0 3.9443-2.8265 7.156-6.3806 7.156zm23.5919 0c-3.4982 0-6.3807-3.2117-6.3807-7.156 0-3.9443 2.8265-7.156 6.3807-7.156 3.5822 0 6.4367 3.2399 6.3807 7.156 0 3.9443-2.7985 7.156-6.3807 7.156z"></path>
-      </svg>
-      <span id="txtLogin">Sign in with Discord</span>
-    </button>
-    <button id="btnGuest" style="opacity: 1; cursor: pointer;">
-      <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
-        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-        <circle cx="12" cy="7" r="4"></circle>
-      </svg>
-      <span id="txtStart">Continue without Discord</span>
-    </button>
-    <div id="tosSection">
-      <input type="checkbox" id="tosCheckbox" checked="">
-      <label for="tosCheckbox">
-        <span>I agree to the</span>
-        <a href="https://dash.unlockffbeta.com/static/TOS.html" target="_blank" rel="noopener">Terms of Service</a>
-        <span>&amp;</span>
-        <a href="https://dash.unlockffbeta.com/static/privacy.html" target="_blank" rel="noopener">Privacy Policy</a>
-      </label>
-    </div>
-  </div>
+    <script nonce="Z3WQvVwET8c1Pd6kYLVveg==">
+    const isLoggedIn = false;
+    const csrf = "6099a3ad9908bd2f68e377a8b88b2769c5309b8edc507ee825e349230c99ebc9";
+    const accountType = "free";
+    const accountRole = "member";
+    const username = "";
+    const displayName = "";
+    const accountExpires = "Kh\u00f4ng gi\u1edbi h\u1ea1n";
+    let defaultAvatar = "";
+    
+    let activeAim = "" || null;
+    if (activeAim) localStorage.setItem('sol_active_aim', activeAim);
+    else localStorage.removeItem('sol_active_aim');
 
-  <div id="step1" class="hidden space-y-4">
-    <div class="input-wrap">
-      <input id="acctInput" type="text" inputmode="numeric" pattern="\d*" autocomplete="off" autocorrect="off" spellcheck="false" placeholder="Enter Account ID">
-    </div>
-    <button id="btnStart" disabled="">
-      <span id="txtStartBtn">Continue without Discord</span>
-    </button>
-    <button id="btnLogoutStep1" class="hidden">
-      <span id="txtLogoutStep1">Sign out</span>
-    </button>
-    <p id="hint1" class="hint-pill"></p>
-  </div>
+    window.solBrightness = localStorage.getItem('sol_brightness') || 100;
+    window.solNeon = localStorage.getItem('sol_neon') || 100;
+    window.solSpeed = localStorage.getItem('sol_speed') || 5;
+    window.solPrimaryColor = localStorage.getItem('sol_primary') || '#00ffff';
+    window.solSecondaryColor = localStorage.getItem('sol_secondary') || '#a855f7';
 
-  <div id="step2" class="hidden space-y-4">
-    <div class="text-center">
-      <p id="hdr" class="step-hdr"></p>
-      <p class="step-acct" style="margin-top:.3rem">
-        <span id="txtAccountLabel" style="color:rgba(255,255,255,.5)">Account</span>
-        <strong id="displayAcct"></strong>
-      </p>
-    </div>
-    <div class="progress-track">
-      <div id="bar" class="progress-fill" style="width:0%"></div>
-    </div>
-    <button id="btnNext" disabled="">
-      <span id="txtNext">Continue</span>
-    </button>
-    <p id="hint2" class="hint-pill"></p>
-  </div>
+    document.body.style.filter = `brightness(${window.solBrightness}%)`;
+    document.documentElement.style.setProperty('--neon-scale', window.solNeon / 100);
+    document.documentElement.style.setProperty('--neon-speed', window.solSpeed + 's');
+    document.documentElement.style.setProperty('--cyan', window.solPrimaryColor);
+    document.documentElement.style.setProperty('--purp', window.solSecondaryColor);
 
-  <div id="step3" class="hidden">
-    <div id="resultCard"></div>
-    <p id="hint3" class="hint-pill" style="margin-top:.75rem"></p>
-  </div>
-  <div id="ad-slot-bottom"><script src="https://pincersmidnight.com/fd34874948aa87bdd99e5c1728b90415/invoke.js"></script></div>
-  <div class="card-footer">
-    <a class="discord-pill" href="https://discord.gg/Ee9wNs8FwQ" target="_blank" rel="noopener">
-      <svg width="16" height="13" viewBox="0 0 71 55" fill="currentColor">
-        <path d="M60.1045 4.8978C55.5792 2.8214 50.7265 1.2916 45.6527.41542c-.0924-.01691-.1847.04093-.2323.12581-.6241 1.11-.1154 2.5581-.5995 3.6963C38.1637 3.4046 32.7345 3.4046 27.3892 4.2216c-.4842-1.1635-1.2006-2.5863-1.8275-3.6963-.0476-.08169-.1399-.12394-.2323-.10908C20.2584 1.2888 15.4057 2.8186 10.8776 4.8978c-.0392.0169-.0728.0451-.0951.0817C1.57795 18.7309-.943561 32.1443.293408 45.3914c.005597.0648.041978.1268.092353.1662C6.45866 50.0174 12.3413 52.7249 18.1147 54.5195c.0924.0282.1903-.0056.2491-.0817 1.3657-1.865 2.5831-3.8315 3.6269-5.8995.0616-.1211.0028-.2648-.1231-.3127-1.931-.7325-3.7697-1.6256-5.5384-2.6398-.1399-.0817-.151-.2818-.0223-.3776.3722-.2789.7445-.5691 1.0999-.8621.0643-.0535.1539-.0648.2295-.031 11.6196 5.3051 24.1992 5.3051 35.6817 0 .0756-.0366.1652-.0253.2323.0282.3554.293.7277.5859 1.1027.8648.1287.0958.1176.2959-.0223.3776-1.7687 1.0339-3.6074 1.9074-5.5412 2.637-.1259.0479-.1847.1944-.1231.3155 1.0662 2.0651 2.2836 4.0316 3.6241 5.8966.056.0789.1567.1127.2491.0845 5.8014-1.7946 11.684-4.5021 17.757-8.9619.0504-.0394.0868-.1014.0924-.1662 1.4804-15.3151-2.4796-28.6185-10.4975-40.4119-.0196-.0394-.0532-.0676-.0924-.0845z"></path>
-      </svg>
-      Join Discord
-    </a>
-    <p class="footer-text">
-      Questions? <a href="mailto:reportme@unlockffbeta.com">reportme@unlockffbeta.com</a>
-    </p>
-  </div>
+    let solDeviceId = localStorage.getItem('sol_device_id');
+    if (!solDeviceId) {
+        solDeviceId = 'DEV-' + Math.random().toString(36).substr(2, 10) + '-' + Date.now();
+        localStorage.setItem('sol_device_id', solDeviceId);
+    }
 
-</div>
-</div>
-</div>
+    let clientDevice = (function() {
+        const ua = navigator.userAgent;
+        let osVer = '';
+        const iosMatch = ua.match(/OS (\d+[_.]\d+)/);
+        if (iosMatch) osVer = ' iOS ' + iosMatch[1].replace('_', '.');
+        if (/iPad/.test(ua)) return 'iPad' + osVer;
+        if (/iPhone/.test(ua)) return 'iPhone' + osVer;
+        if (/Android/.test(ua)) return 'Android';
+        if (/Windows NT 10/.test(ua)) return 'Windows 10/11 PC';
+        if (/Windows NT/.test(ua)) return 'Windows PC';
+        if (/Mac OS/.test(ua)) return 'Mac OS';
+        return 'Thiết bị Web';
+    })();
 
+    let clientIP = 'Đang lấy...';
+    fetch('https://api.ipify.org?format=json')
+        .then(res => res.json())
+        .then(data => { clientIP = data.ip; document.querySelectorAll('.live-ip-display').forEach(el => el.innerText = clientIP); })
+        .catch(e => { clientIP = 'Lỗi API'; document.querySelectorAll('.live-ip-display').forEach(el => el.innerText = clientIP); });
 
-<div id="adGate" class="ad-gate hidden">
-  <div class="ad-gate-card">
-    <div id="adGateIcon" class="ad-gate-icon"></div>
-    <h2 id="adGateTitle" class="ad-gate-title"></h2>
-    <p id="adGateDesc" class="ad-gate-desc"></p>
-    <button id="adGateOpen" class="ad-gate-btn"></button>
-    <div id="adGateTimer" class="ad-gate-timer hidden">
-      <div class="ad-gate-progress">
-        <div id="adGateBar" class="ad-gate-bar"></div>
-      </div>
-      <span id="adGateCountdown" class="ad-gate-countdown"></span>
-    </div>
-    <button id="adGateContinue" class="ad-gate-continue hidden" disabled=""></button>
-  </div>
-</div>
+    const dict = {
+        vi: { tab_login: "Đăng nhập", tab_getkey: "Tài khoản Free", tab_video: "Hướng Dẫn", tab_aim: "Aimbot", tab_chams: "Chams", tab_chat: "Chat chung", tab_acc: "Tài khoản", login_title: "ĐĂNG NHẬP", user_ph: "Tài khoản...", pass_ph: "Mật khẩu...", btn_confirm: "XÁC NHẬN" },
+        en: { tab_login: "Login", tab_getkey: "Free Account", tab_video: "Tutorial", tab_aim: "Aimbot", tab_chams: "Chams", tab_chat: "Global Chat", tab_acc: "Account", login_title: "LOGIN", user_ph: "Username...", pass_ph: "Password...", btn_confirm: "CONFIRM" }
+    };
+    let curLang = localStorage.getItem('sol_lang') || 'vi';
+    function t(key) { return dict[curLang][key] || key; }
 
-<script src="https://cdn.jsdelivr.net/npm/crypto-js@4.1.1/crypto-js.min.js" defer="" type="text/javascript"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js" defer="" type="text/javascript"></script>
-<script src="/core/js/1771890199.js" defer="" type="text/javascript"></script>
+    document.getElementById('langToggle').addEventListener('click', () => {
+        curLang = (curLang === 'vi') ? 'en' : 'vi';
+        localStorage.setItem('sol_lang', curLang);
+        document.getElementById('langToggle').innerText = curLang.toUpperCase();
+        if (document.getElementById('gameModalOverlay').classList.contains('active')) { renderUserBar(); switchTab(currentTab); }
+    });
+    document.getElementById('langToggle').innerText = curLang.toUpperCase();
 
-<script async="" src="https://pincersmidnight.com/da/1c/ce/da1cce686bf9f2527677f40216a98d8f.js" type="text/javascript"></script>
+    const overlay = document.getElementById('gameModalOverlay');
+    const openMenuBtn = document.getElementById('openMenuBtn');
+    const closeMenuBtn = document.getElementById('closeMenuBtn');
+    
+    closeMenuBtn.addEventListener('click', () => {
+        overlay.classList.remove('active');
+        openMenuBtn.style.display = 'flex';
+    });
 
-<script defer="" src="https://static.cloudflareinsights.com/beacon.min.js/v833ccba57c9e4d2798f2e76cebdd09a11778172276447" integrity="sha512-57MDmcccJXYtNnH+ZiBwzC4jb2rvgVCEokYN+L/nLlmO8rfYT/gIpW2A569iJ/3b+0UEasghjuZH/ma3wIs/EQ==" data-cf-beacon="{&quot;version&quot;:&quot;2024.11.0&quot;,&quot;token&quot;:&quot;3a914663c9d5460fa833662a0f14d1e5&quot;,&quot;server_timing&quot;:{&quot;name&quot;:{&quot;cfCacheStatus&quot;:true,&quot;cfEdge&quot;:true,&quot;cfExtPri&quot;:true,&quot;cfL4&quot;:true,&quot;cfOrigin&quot;:true,&quot;cfSpeedBrain&quot;:true},&quot;location_startswith&quot;:null}}" crossorigin="anonymous"></script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a0bef57479655ce3',t:'MTc4MTQ5OTA3Nw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><iframe height="1" width="1" style="position: absolute; top: 0px; left: 0px; border: medium; visibility: hidden;"></iframe>
-<div id="z2e3a57" style="--rdata: z2e3a57; position: fixed; inset: 0px; z-index: 2147483650; background: black; opacity: 0.01; height: 693px; width: 428px;"><a id="lk4eq" href="https://masterlythehague.com/bawgke63?nozfhs=36&amp;refer=https%3A%2F%2Funlockffbeta.com%2F&amp;kw=%5B%22verify%22%2C%22astutech%22%2C%22server%22%2C%22account%22%2C%22ff%22%2C%22beta%22%5D&amp;key=48b4f934bf6a2e2fbd7806ff1d89b4a4&amp;scrWidth=428&amp;scrHeight=926&amp;tz=7&amp;ship=1&amp;v=2026.5.0&amp;abt=mg&amp;sub3=invoke_layer&amp;res=14.245&amp;dev=r&amp;ifid=019ec99e-a7d5-7347-887e-68a2f78946f6&amp;ibid=019ec99e-a71e-7692-b304-d12f3cc2031f&amp;uidm=019ec99e-a71f-7693-9748-46da8e9561e3_1" target="_blank" style="display: block; height: inherit;"></a></div></body></html>
+    openMenuBtn.addEventListener('click', () => {
+        overlay.classList.add('active');
+        openMenuBtn.style.display = 'none';
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const intro = document.getElementById('introScreen');
+        const bgMusic = document.getElementById('bgMusic');
+
+        document.body.addEventListener('click', () => {
+            if (bgMusic.paused) bgMusic.play().catch(e => console.log('Chưa phát được nhạc nền:', e));
+        }, { once: true });
+
+        document.addEventListener("visibilitychange", () => {
+            if (document.hidden) bgMusic.pause();
+            else bgMusic.play().catch(e => {});
+        });
+
+        window.addEventListener("blur", () => bgMusic.pause());
+        window.addEventListener("focus", () => {
+            if (!document.hidden) bgMusic.play().catch(e => {});
+        });
+
+        setTimeout(() => {
+            intro.style.opacity = '0';
+            setTimeout(() => {
+                intro.style.display = 'none';
+                overlay.classList.add('active'); 
+                openMenuBtn.style.display = 'none';
+                renderUserBar(); 
+                switchTab(currentTab);
+                bgMusic.play().catch(e => {}); 
+            }, 600);
+        }, 3000);
+    });
+
+    function handleKick() {
+        if(window.isKickedOut) return;
+        window.isKickedOut = true;
+        localStorage.removeItem('sol_active_aim');
+        localStorage.removeItem('sol_free_expire');
+        Swal.fire({
+            html: `
+            <div style="padding:20px; text-align:center; position:relative; overflow:hidden;">
+                <div style="position:absolute; inset:0; background:radial-gradient(circle, rgba(239,68,68,0.25) 0%, transparent 70%); animation: pulseBg 1s infinite alternate;"></div>
+                <div style="font-size:75px; color:var(--red-mnt); margin-bottom:15px; text-shadow: 0 0 25px var(--red-mnt), 0 0 50px var(--red-mnt); animation: vibrate 0.3s infinite;"><i class="fas fa-skull-crossbones"></i></div>
+                <h2 style="color:#fff; font-family:'Orbitron'; font-size:28px; font-weight:900; letter-spacing:3px; margin-bottom:10px; text-shadow: 0 0 15px #fff, 0 0 30px var(--red-mnt), 0 0 60px var(--red-mnt);">ACCESS DENIED</h2>
+                <div style="width:60px; height:4px; background:var(--red-mnt); margin: 0 auto 20px auto; box-shadow:0 0 15px var(--red-mnt);"></div>
+                <p style="color:#fca5a5; font-size:14px; margin-bottom:20px; line-height:1.7; font-weight:bold; position:relative; z-index:2;">TÀI KHOẢN ĐÃ BỊ KICK / XÓA HOẶC HẾT HẠN.<br><span style="color:#fff;">HỆ THỐNG ĐÃ NGẮT KẾT NỐI VÀ XÓA BỎ IP CỦA BẠN!</span></p>
+            </div>
+            `,
+            background: 'rgba(5, 2, 10, 0.98)',
+            showConfirmButton: true,
+            confirmButtonText: '<i class="fas fa-biohazard"></i> CHẤP NHẬN',
+            allowOutsideClick: false,
+            backdrop: `rgba(15, 2, 5, 0.9)`,
+            customClass: { popup: 'swal-sol-popup swal-sol-kick', confirmButton: 'sol-btn-kick' }
+        }).then(() => { location.reload(); });
+    }
+
+    const contentDiv = document.getElementById('gameContent');
+    const userBar = document.getElementById('sidebarMenu');
+    
+    let currentTab = isLoggedIn ? 'aim' : 'login';
+    let chatInterval = null, lastChatTime = 0;
+
+    // === Cập nhật MASTER_AIM_LIST ===
+    const MASTER_AIM_LIST = [
+        { id: 'aim_co_v2', name: 'Aim 2019', req: 'free' }, 
+        { id: 'aim_antena', name: 'Aim Antena', req: 'free' }, 
+        { id: 'aim_body_holo', name: 'Aim Body Holo', req: 'free' }, 
+        { id: 'aim_co_dai', name: 'Aim Cổ Dài', req: 'free' }, 
+        { id: 'aim_chim', name: 'Aim Chim', req: 'free' }, 
+        { id: 'aim_co', name: 'Aim Cổ', req: 'free' }, 
+        
+        { id: 'no_antena', name: 'No Antena', req: 'vip' }, 
+        { id: 'aim_body_antena', name: 'Body Antena', req: 'vip' }, 
+        { id: 'aim_chest', name: 'Aim Chest', req: 'vip' }, 
+        { id: 'aim_body_100', name: 'Aim Body 100% Cân USD', req: 'vip' }, 
+        
+        { id: 'aim_neck', name: 'Aim Neck', req: 'vip1' }, 
+        { id: 'aim_body', name: 'Aim Body', req: 'vip1' }, 
+        { id: 'aim_noantena_balance', name: 'No Antena Cân USD', req: 'vip1', maintenance: true }, 
+        { id: 'aim_magic_bullet', name: 'Aim Magic Bullet', req: 'vip1', maintenance: true }, 
+        { id: 'aim_chest_balance', name: 'Aim Chest Cân USD', req: 'vip1', maintenance: true }
+    ];
+
+    const MASTER_CHAMS_LIST = [
+        { id: 'aim_chams', name: 'Chams (Nổi bật)', req: 'free', maintenance: true }
+    ];
+
+    const AIM_CATEGORIES = {
+        all: ['aim_co_v2', 'aim_antena', 'aim_body_holo', 'aim_co_dai', 'aim_chim', 'aim_co', 'no_antena', 'aim_body_antena', 'aim_chest', 'aim_body_100', 'aim_neck', 'aim_body', 'aim_noantena_balance', 'aim_magic_bullet', 'aim_chest_balance'],
+        aim: ['no_antena', 'aim_chest', 'aim_body', 'aim_body_100', 'aim_noantena_balance', 'aim_chest_balance'],
+        esp: ['aim_antena', 'aim_body_holo', 'aim_body_antena'],
+        aim2019: ['aim_co_v2', 'aim_co_dai', 'aim_chim', 'aim_co']
+    };
+
+    let currentAimFilter = 'all';
+
+    function checkAccess(reqTier) {
+        let effTier = accountType;
+        if (accountRole === 'admin' || accountRole === 'mod') effTier = 'vip1';
+        if (effTier === 'vip1') return true;
+        if (effTier === 'vip' && (reqTier === 'free' || reqTier === 'vip')) return true;
+        if (effTier === 'free' && reqTier === 'free') return true;
+        return false;
+    }
+
+    function getFilteredAims(filter) {
+        const filterIds = AIM_CATEGORIES[filter] || AIM_CATEGORIES['all'];
+        return MASTER_AIM_LIST.filter(aim => filterIds.includes(aim.id));
+    }
+
+    function renderAimItem(aim) {
+        let hasPermission = checkAccess(aim.req);
+        
+        if (!hasPermission) {
+            let reqText = aim.req.toUpperCase();
+            return `
+            <div class="aim-card locked" data-req="${reqText}">
+                <span style="font-size:13px; font-weight:900; color:#888; text-shadow:none;">
+                    <i class="fas fa-lock" style="color:#fbbf24; margin-right:4px;"></i> ${aim.name}
+                </span>
+                <div style="display:flex; align-items:center;">
+                    <span style="color:#fbbf24; font-size:10px; font-weight:800; margin-right:8px; letter-spacing:0.5px;">CẦN ${reqText}</span>
+                    <label class="switch">
+                        <input type="checkbox" disabled>
+                        <span class="slider" style="background-color: rgba(255,255,255,0.05);"></span>
+                    </label>
+                </div>
+            </div>`;
+        }
+
+        if (aim.maintenance) {
+            return `
+            <div class="aim-card maintenance" data-id="${aim.id}">
+                <span style="font-size:13px; font-weight:900; color:var(--red-mnt); text-shadow:0 0 8px var(--red-mnt);">${aim.name}</span>
+                <div style="display:flex; align-items:center;">
+                    <span class="maintenance-text">BẢO TRÌ</span>
+                    <label class="switch">
+                        <input type="checkbox" disabled>
+                        <span class="slider" style="background-color: rgba(255,255,255,0.1);"></span>
+                    </label>
+                </div>
+            </div>`;
+        }
+
+        let isChecked = activeAim === aim.id;
+        let isDisabled = activeAim !== null && activeAim !== aim.id;
+        let activeText = isChecked ? '<span style="color:var(--ff-orange); font-size:10px; font-weight:900; margin-right:8px; letter-spacing:0.5px; text-shadow: 0 0 10px var(--ff-orange);">KÍCH HOẠT</span>' : '';
+        return `
+        <div class="aim-card ${isDisabled ? 'disabled' : ''}" data-id="${aim.id}">
+            <span style="font-size:13px; font-weight:900; color:${isDisabled ? '#777' : '#fff'}; text-shadow:${isDisabled ? 'none' : '0 0 8px #fff'};">${aim.name}</span>
+            <div style="display:flex; align-items:center;">
+                ${activeText}
+                <label class="switch">
+                    <input type="checkbox" class="aim-switch-input" data-id="${aim.id}" ${isChecked ? 'checked' : ''} ${isDisabled ? 'disabled' : ''}>
+                    <span class="slider"></span>
+                </label>
+            </div>
+        </div>`;
+    }
+
+    function renderAimList(filter) {
+        const container = document.getElementById('aimListContainer');
+        if (!container) return;
+        const aims = getFilteredAims(filter);
+        let html = '';
+        aims.forEach(aim => { html += renderAimItem(aim); });
+        container.innerHTML = html;
+        attachAimEvents(container);
+    }
+
+    function renderChamsList() {
+        const container = document.getElementById('chamsListContainer');
+        if (!container) return;
+        let html = '';
+        MASTER_CHAMS_LIST.forEach(c => { html += renderAimItem(c); });
+        container.innerHTML = html;
+        attachAimEvents(container);
+    }
+
+    function attachAimEvents(container) {
+        container.querySelectorAll('.aim-card').forEach(card => {
+            card.addEventListener('click', function(e) {
+                if (e.target.tagName === 'INPUT' || e.target.tagName === 'SPAN' && e.target.classList.contains('slider')) return; 
+                
+                if (this.classList.contains('locked')) {
+                    let reqText = this.getAttribute('data-req');
+                    Swal.fire({
+                        icon: 'warning',
+                        title: '<span style="color:#fbbf24; text-shadow:0 0 10px #fbbf24;">KHÓA CHỨC NĂNG</span>',
+                        html: `<p style="color:#a1a1aa; font-size:14px;">Tính năng này yêu cầu tài khoản gói <b style="color:var(--cyan); text-shadow:0 0 5px var(--cyan);">${reqText}</b>.<br>Vui lòng nâng cấp để sử dụng!</p>`,
+                        background: '#05020a', color: '#fff',
+                        customClass: { popup: 'swal-sol-popup swal-sol-warning', confirmButton: 'sol-btn-ok' }
+                    });
+                    return;
+                }
+
+                let id = this.getAttribute('data-id');
+                if (!this.classList.contains('disabled') && !this.classList.contains('maintenance')) {
+                    handleAimToggle(id);
+                }
+            });
+        });
+
+        container.querySelectorAll('.aim-switch-input').forEach(input => {
+            input.addEventListener('change', function() { handleAimToggle(this.getAttribute('data-id')); });
+        });
+    }
+
+    async function handleAimToggle(id) {
+        if (window.isTogglingAim) return; 
+        window.isTogglingAim = true;
+        let isTurningOn = (activeAim !== id);
+        if (isTurningOn && activeAim !== null) {
+            Swal.fire({
+                html: `<div style="padding:10px;"><div style="font-size:60px; color:var(--red-mnt); margin-bottom:10px; text-shadow:0 0 20px var(--red-mnt);"><i class="far fa-times-circle"></i></div><h2 style="color:#fff; letter-spacing:1px; font-size:22px; font-weight:bold; text-shadow:0 0 10px #fff;">Cảnh báo</h2><p style="color:#a1a1aa; font-size:14px; margin: 15px 0;">Bạn phải tắt chức năng đang bật trước khi bật gói mới!</p></div>`,
+                background: '#05020a', showConfirmButton: true, confirmButtonText: 'OK',
+                customClass: { popup: 'swal-sol-popup swal-sol-warning', confirmButton: 'sol-btn-ok' }
+            });
+            window.isTogglingAim = false; return; 
+        }
+        const fd = new URLSearchParams();
+        fd.append('action', 'toggle_aim'); fd.append('csrf_token', csrf); fd.append('aim_id', id); fd.append('state', isTurningOn ? 1 : 0); fd.append('client_ip', clientIP);
+        Swal.fire({title: 'Đang kết nối Server...', background:'#05020a', color:'#fff', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); }});
+        try {
+            const r = await fetch('', {method:'POST', body: fd});
+            const d = await r.json();
+            if (d.kick) { handleKick(); return; }
+            if (d.s === 'error') {
+                Swal.fire({icon:'error', title:'Cảnh báo', text: d.m, background:'#05020a', color:'#fff', confirmButtonColor: '#00ffff'});
+                if (currentTab === 'aim') renderAimList(currentAimFilter);
+                if (currentTab === 'chams') renderChamsList();
+            } else if (d.s === 'cooldown') {
+                Swal.fire({html: `<div style="padding:10px;"><div style="font-size:60px; color:var(--red-mnt); margin-bottom:10px; text-shadow:0 0 20px var(--red-mnt);"><i class="far fa-times-circle"></i></div><h2 style="color:#fff; letter-spacing:1px; font-size:22px; font-weight:bold;">Cảnh báo</h2><p style="color:#a1a1aa; font-size:14px; margin: 15px 0;">Vui lòng đợi 5s để kích hoạt lại.</p></div>`, background: '#05020a', showConfirmButton: true, confirmButtonText: 'OK', customClass: { popup: 'swal-sol-popup swal-sol-warning', confirmButton: 'sol-btn-ok' } });
+                if (currentTab === 'aim') renderAimList(currentAimFilter);
+                if (currentTab === 'chams') renderChamsList();
+            } else if (d.s === 'success') {
+                if (isTurningOn) {
+                    activeAim = id; localStorage.setItem('sol_active_aim', id);
+                    if (accountType === 'free' && id === 'no_antena') localStorage.setItem('sol_free_expire', Date.now() + 3600000);
+                    Swal.fire({
+                        html: `
+                        <div style="padding:10px; display:flex; flex-direction:column; align-items:center;">
+                            <h2 style="font-family:'Orbitron'; color:#fff; font-size:22px; font-weight:900; letter-spacing:2px; margin-bottom:10px; animation: textNeonPink 2s infinite alternate;">KÍCH HOẠT THÀNH CÔNG</h2>
+                            <p style="color:#a1a1aa; font-size:13px; margin-bottom: 25px;">Server đã kích hoạt, cổng proxy là:</p>
+                            <div style="background: transparent; border: 3px solid var(--cyan); border-radius: 12px; padding: 15px 40px; display:inline-block; margin-bottom: 30px; box-shadow: 0 0 30px rgba(0,255,255,0.6), inset 0 0 20px rgba(0,255,255,0.3);">
+                                <b style="color:var(--cyan); font-size:42px; font-family:'Orbitron'; font-weight:900; text-shadow: 0 0 20px var(--cyan), 0 0 40px var(--cyan); letter-spacing:4px;">${d.port}</b>
+                            </div>
+                            <div>
+                                <button class="swal2-confirm game-btn" style="width: auto; padding: 10px 40px; background:transparent; border: 2px solid var(--pink); border-radius:25px; color:#fff; font-weight:900; font-family:'Orbitron'; font-size:15px; box-shadow: 0 0 20px rgba(255,0,127,0.8); text-transform:uppercase; letter-spacing:1px;"><i class="fas fa-check"></i> XÁC NHẬN</button>
+                            </div>
+                        </div>`, background: '#05020a', showConfirmButton: false, customClass: { popup: 'swal-sol-popup' },
+                        didOpen: () => {
+                            const confirmBtn = Swal.getPopup().querySelector('.swal2-confirm');
+                            if(confirmBtn) confirmBtn.addEventListener('click', () => Swal.close());
+                        }
+                    });
+                } else {
+                    activeAim = null; localStorage.removeItem('sol_active_aim');
+                    if (id === 'no_antena') localStorage.removeItem('sol_free_expire');
+                    Swal.fire({icon:'success', title:'ĐÃ TẮT', text:'Ngừng kích hoạt an toàn. Đợi 5s để bật gói khác.', timer:2500, showConfirmButton:false, background:'#05020a', color:'#fff', toast:true, position:'top-end'});
+                }
+                if (currentTab === 'aim') renderAimList(currentAimFilter);
+                if (currentTab === 'chams') renderChamsList();
+            }
+        } catch (e) { Swal.fire({icon:'error', title:'Lỗi kết nối', background:'#05020a', color:'#fff'}); if (currentTab === 'aim') renderAimList(currentAimFilter); if (currentTab === 'chams') renderChamsList(); }
+        window.isTogglingAim = false;
+    }
+
+    function renderUserBar() {
+        if (isLoggedIn) {
+            userBar.innerHTML = `
+                <img src="${defaultAvatar}" class="user-avatar-mini" id="miniAvatar" title="Đổi Avatar">
+                <span class="user-name-mini">${displayName}</span>
+                <div class="mini-tabs">
+                    <button class="mini-tab ${currentTab==='aim'?'active':''}" data-tab="aim"><i class="fas fa-crosshairs"></i> ${t('tab_aim')}</button>
+                    <button class="mini-tab ${currentTab==='chams'?'active':''}" data-tab="chams"><i class="fas fa-eye"></i> ${t('tab_chams')}</button>
+                    <button class="mini-tab ${currentTab==='chat'?'active':''}" data-tab="chat"><i class="fas fa-comments"></i> ${t('tab_chat')}</button>
+                    <button class="mini-tab ${currentTab==='account'?'active':''}" data-tab="account"><i class="fas fa-user-astronaut"></i> ${t('tab_acc')}</button>
+                    <button class="mini-tab ${currentTab==='settings'?'active':''}" data-tab="settings"><i class="fas fa-cog"></i> Cài Đặt Theme</button>
+                    <div style="height:1px; background:rgba(255,255,255,0.2); margin:4px 0; box-shadow:0 0 5px #fff;"></div>
+                    <a href="https://t.me/solitude201229" target="_blank" class="mini-tab"><i class="fas fa-user-shield"></i> Tele Admin</a>
+                    <a href="https://t.me/solitudeproxy" target="_blank" class="mini-tab"><i class="fab fa-telegram-plane"></i> Join Group Tele</a>
+                    <a href="https://discord.gg/4CuEwNCEC" target="_blank" class="mini-tab"><i class="fab fa-discord"></i> Discord</a>
+                </div>
+            `;
+            document.getElementById('miniAvatar').addEventListener('click', () => document.getElementById('globalAvatarInput').click());
+        } else {
+            userBar.innerHTML = `
+                <div class="mini-tabs">
+                    <button class="mini-tab ${currentTab==='login'?'active':''}" data-tab="login"><i class="fas fa-sign-in-alt"></i> ${t('tab_login')}</button>
+                    <button class="mini-tab ${currentTab==='getkey'?'active':''}" data-tab="getkey"><i class="fas fa-key"></i> ${t('tab_getkey')}</button>
+                    <button class="mini-tab ${currentTab==='video'?'active':''}" data-tab="video"><i class="fas fa-play"></i> ${t('tab_video')}</button>
+                </div>
+            `;
+        }
+        userBar.querySelectorAll('.mini-tab[data-tab]').forEach(btn => {
+            btn.addEventListener('click', function() { currentTab = this.dataset.tab; renderUserBar(); switchTab(currentTab); });
+        });
+    }
+
+    function clearChatInterval() { if (chatInterval) { clearInterval(chatInterval); chatInterval = null; } }
+
+    function switchTab(tab) {
+        clearChatInterval(); let html = '';
+        if (!isLoggedIn) {
+            if (tab === 'login') {
+                html = `
+                    <div style="width:100%; max-width:300px; margin: 20px auto; text-align:center;">
+                        <h3 style="font-family:'Orbitron'; color:#fff; margin-bottom: 25px; letter-spacing:3px; text-shadow:0 0 15px var(--cyan), 0 0 30px var(--cyan);"><i class="fas fa-bolt" style="color:var(--cyan);"></i> ${t('login_title')}</h3>
+                        <form id="loginFormGame">
+                            <input class="game-input" type="text" name="username" placeholder="${t('user_ph')}" required autocomplete="off">
+                            <input class="game-input" type="password" name="password" placeholder="${t('pass_ph')}" required autocomplete="off">
+                            <button type="submit" class="game-btn" style="margin-top:10px;">${t('btn_confirm')}</button>
+                        </form>
+                    </div>`;
+            } else if (tab === 'getkey') {
+                html = `<div style="text-align:center; padding: 40px 10px;"><a href="https://solitudepremium.click/solitude/keyfree.php" target="_blank" class="game-btn" style="background: linear-gradient(135deg, #059669, #10b981); display:inline-block; text-decoration:none; box-shadow: 0 0 20px rgba(16,185,129,0.6); max-width:250px;"><i class="fas fa-key"></i> Get Tài Khoản free</a></div>`;
+            } else if (tab === 'video') {
+                html = `<div style="text-align:center; padding: 40px 10px;"><a href="https://drive.google.com/file/d/1BvIeoHL2MySoevNwlrrcRr-xy_ISRt7R/view?usp=drivesdk" target="_blank" class="game-btn" style="background: linear-gradient(135deg, #be185d, var(--pink)); display:inline-block; text-decoration:none; box-shadow: 0 0 20px rgba(255,0,127,0.6); max-width:250px;"><i class="fas fa-play-circle"></i> ${t('tab_video')}</a></div>`;
+            }
+        } else {
+            if (tab === 'aim') {
+                html = `
+                    <div style="width:100%; max-width:600px; margin: 0 auto; padding-top:5px;">
+                        <h4 style="color:var(--cyan); text-shadow: 0 0 15px var(--cyan); margin-bottom: 20px; display:flex; align-items:center; justify-content:center; gap:8px; font-size:18px; font-family:'Orbitron'; width:100%;">
+                            <i class="fas fa-crosshairs"></i> AIMBOT
+                        </h4>
+                        <div style="background: rgba(249,115,22,0.1); border: 1px dashed var(--ff-orange); border-radius: 8px; padding: 10px; margin-bottom: 15px; text-align: center;">
+                            <span style="color: var(--ff-orange); font-size: 12px; font-weight: 800; text-shadow: 0 0 5px rgba(249,115,22,0.5);">
+                                <i class="fas fa-exclamation-triangle"></i> LƯU Ý: Nếu đã bật "Aim Body Holo", sau đó bật các Aim khác thì vẫn sẽ dính hiệu ứng Holo!
+                            </span>
+                        </div>
+                        <div class="aim-filter-bar">
+                            <button class="aim-filter-btn active" data-filter="all">Tất cả</button>
+                            <button class="aim-filter-btn" data-filter="aim">Aim</button>
+                            <button class="aim-filter-btn" data-filter="esp">ESP</button>
+                            <button class="aim-filter-btn" data-filter="aim2019">Aim 2019</button>
+                        </div>
+                        <div id="aimListContainer"></div>
+                    </div>`;
+            } else if (tab === 'chams') {
+                html = `
+                    <div style="width:100%; max-width:600px; margin: 0 auto; padding-top:5px;">
+                        <h4 style="color:var(--cyan); text-shadow: 0 0 15px var(--cyan); margin-bottom: 20px; display:flex; align-items:center; justify-content:center; gap:8px; font-size:18px; font-family:'Orbitron'; width:100%;">
+                            <i class="fas fa-eye"></i> MENU CHAMS
+                        </h4>
+                        <div id="chamsListContainer"></div>
+                    </div>`;
+            } else if (tab === 'settings') {
+                html = `
+                    <div style="width:100%; max-width:400px; margin: 0 auto; padding-top:5px;">
+                        <h4 style="color:var(--cyan); text-shadow: 0 0 15px var(--cyan); margin-bottom: 25px; display:flex; align-items:center; justify-content:center; gap:8px; font-size:16px; font-family:'Orbitron';"><i class="fas fa-cog"></i> CÀI ĐẶT GIAO DIỆN</h4>
+                        <div style="text-align:left; margin-bottom: 15px; background:rgba(0,0,0,0.6); padding:15px; border-radius:12px; border:1px solid rgba(168,85,247,0.5); box-shadow: inset 0 0 15px rgba(0,0,0,0.8);">
+                            <label style="color:#c4b5fd; font-weight:bold; font-size:12px;">Độ sáng tổng thể: <span id="brightValText">${window.solBrightness}%</span></label>
+                            <input type="range" id="brightSlider" min="20" max="150" value="${window.solBrightness}" style="width:100%; margin-top:8px; cursor:pointer;">
+                        </div>
+                        <div style="text-align:left; margin-bottom: 15px; background:rgba(0,0,0,0.6); padding:15px; border-radius:12px; border:1px solid rgba(168,85,247,0.5); box-shadow: inset 0 0 15px rgba(0,0,0,0.8);">
+                            <label style="color:#c4b5fd; font-weight:bold; font-size:12px;">Độ nháy viền Neon: <span id="neonValText">${window.solNeon}%</span></label>
+                            <input type="range" id="neonSlider" min="0" max="300" value="${window.solNeon}" style="width:100%; margin-top:8px; cursor:pointer;">
+                        </div>
+                        <div style="display:flex; gap:10px;">
+                            <div style="flex:1; text-align:center; background:rgba(0,0,0,0.6); padding:10px; border-radius:12px; border:1px solid rgba(168,85,247,0.5); box-shadow: inset 0 0 15px rgba(0,0,0,0.8);">
+                                <label style="display:block; color:#c4b5fd; font-weight:bold; font-size:11px; margin-bottom:5px;">Màu Chính</label>
+                                <input type="color" id="primaryColorPicker" value="${window.solPrimaryColor}" style="cursor:pointer; width:100%; height:35px; border:none; background:transparent; padding:0;">
+                            </div>
+                            <div style="flex:1; text-align:center; background:rgba(0,0,0,0.6); padding:10px; border-radius:12px; border:1px solid rgba(168,85,247,0.5); box-shadow: inset 0 0 15px rgba(0,0,0,0.8);">
+                                <label style="display:block; color:#c4b5fd; font-weight:bold; font-size:11px; margin-bottom:5px;">Màu Phụ</label>
+                                <input type="color" id="secondaryColorPicker" value="${window.solSecondaryColor}" style="cursor:pointer; width:100%; height:35px; border:none; background:transparent; padding:0;">
+                            </div>
+                        </div>
+                    </div>`;
+            } else if (tab === 'account') {
+                let badgeTag = '';
+                if (accountRole === 'admin') badgeTag = '<span class="boss-icon">BOSS</span>';
+                else if (accountRole === 'mod') badgeTag = '<span class="mod-icon">MOD</span>';
+                let displayRole = accountRole;
+                if (accountRole === 'mod') displayRole = 'PHÓ NHÓM';
+                let canChangeName = accountRole !== 'mod';
+                let editIcon = canChangeName ? '<i class="fas fa-edit" style="font-size:10px; margin-left:6px; color:var(--cyan); text-shadow:0 0 5px var(--cyan);"></i>' : '';
+                let idNameBtn = canChangeName ? 'id="btnChangeName"' : '';
+                let cursorStyle = canChangeName ? 'cursor:pointer;' : '';
+                let titleAttr = canChangeName ? 'title="Nhấn để đổi tên"' : '';
+                html = `
+                    <div style="width:100%; max-width:400px; margin: 0 auto; display:flex; gap: 20px; align-items:center;">
+                        <div style="text-align:center; flex-shrink:0;">
+                            <img id="accountAvatarImg" src="${defaultAvatar}" class="account-avatar-img" style="width:90px; height:90px;">
+                            <div style="font-size:11px; color:#c4b5fd; margin-top:12px; text-shadow:0 0 10px var(--purp); font-weight:bold; letter-spacing:1px;">[ ĐỔI ẢNH ]</div>
+                        </div>
+                        <div style="flex: 1;">
+                            <div style="background:rgba(0,0,0,0.6); padding:14px; border-radius:12px; font-size:12px; margin-bottom:15px; border:1px solid rgba(168,85,247,0.5); box-shadow: inset 0 0 15px rgba(0,0,0,0.8), 0 0 10px rgba(168,85,247,0.2);">
+                                <div style="display:flex; justify-content:space-between; margin-bottom:10px; border-bottom:1px dashed rgba(255,255,255,0.2); padding-bottom:6px; align-items:center;">
+                                    <span style="color:#c4b5fd; font-weight:bold;">Tài khoản:</span> 
+                                    <b ${idNameBtn} style="color:#fff; display:flex; align-items:center; ${cursorStyle} text-shadow:0 0 5px #fff;" ${titleAttr}>
+                                        ${displayName} ${editIcon} ${badgeTag}
+                                    </b>
+                                </div>
+                                <div style="display:flex; justify-content:space-between; margin-bottom:10px; border-bottom:1px dashed rgba(255,255,255,0.2); padding-bottom:6px;"><span style="color:#c4b5fd; font-weight:bold;">Chức vụ:</span> <b style="color:var(--ff-orange); text-transform:uppercase; text-shadow:0 0 10px var(--ff-orange);">${displayRole}</b></div>
+                                <div style="display:flex; justify-content:space-between; margin-bottom:10px; border-bottom:1px dashed rgba(255,255,255,0.2); padding-bottom:6px;"><span style="color:#c4b5fd; font-weight:bold;">Gói thẻ:</span> <b style="color:var(--cyan); text-transform:uppercase; text-shadow:0 0 10px var(--cyan);">${accountType}</b></div>
+                                <div style="display:flex; justify-content:space-between; margin-bottom:10px; border-bottom:1px dashed rgba(255,255,255,0.2); padding-bottom:6px;"><span style="color:#c4b5fd; font-weight:bold;">IP:</span> <b class="live-ip-display" style="color:#fff; text-shadow:0 0 5px #fff;">${clientIP}</b></div>
+                                <div style="display:flex; justify-content:space-between;"><span style="color:#c4b5fd; font-weight:bold;">Thiết bị:</span> <b style="color:#fff; text-shadow:0 0 5px #fff; text-align:right;">${clientDevice}</b></div>
+                            </div>
+                            <button class="game-btn" id="logoutBtn" style="background: linear-gradient(135deg, #be123c, var(--red-mnt)); box-shadow: 0 0 20px rgba(239,68,68,0.7);"><i class="fas fa-power-off"></i> ĐĂNG XUẤT</button>
+                        </div>
+                    </div>`;
+            } else if (tab === 'chat') {
+                html = `
+                    <div class="chat-container">
+                        <div style="text-align:center; padding: 10px; background:rgba(0,0,0,0.8); color:var(--cyan); font-weight:900; font-family:'Orbitron'; font-size:12px; border-bottom:1px solid rgba(0,255,255,0.2); box-shadow: 0 5px 15px rgba(0,0,0,0.8); z-index:10; text-shadow:0 0 10px var(--cyan);">
+                            <i class="fas fa-users"></i> Tài khoản trực tuyến: <span id="onlineCountText" style="color:#fff; text-shadow:0 0 10px #fff; font-size:14px; margin-left:6px;">Đang tải...</span>
+                        </div>
+                        <div class="chat-box" id="chatBox"></div>
+                        <div class="chat-input-wrapper">
+                            <div class="chat-input-area">
+                                <div class="chat-plus-btn"><i class="fas fa-plus" style="font-size:11px;"></i></div>
+                                <input class="game-input" id="chatInput" placeholder="Nhập tin nhắn..." autocomplete="off">
+                                <button class="chat-send-btn" id="chatSendBtn"><i class="fas fa-paper-plane"></i></button>
+                            </div>
+                        </div>
+                    </div>`;
+            }
+        }
+        contentDiv.innerHTML = html;
+
+        if (!isLoggedIn && tab === 'login') {
+            document.getElementById('loginFormGame').addEventListener('submit', async e => {
+                e.preventDefault();
+                const d = new URLSearchParams(new FormData(e.target));
+                d.append('action','login'); d.append('csrf_token', csrf);
+                d.append('device_id', solDeviceId); d.append('device_info', clientDevice);
+                const r = await fetch('', {method:'POST', body: d});
+                const data = await r.json();
+                if (data.s === 'success') { sessionStorage.setItem('autoOpenMenu', '1'); location.reload(); } 
+                else Swal.fire({icon:'error', title:'Lỗi Đăng Nhập', text:data.m, background:'#05020a', color:'#fff'});
+            });
+        }
+        if (isLoggedIn && tab === 'settings') {
+            document.getElementById('brightSlider').addEventListener('input', (e) => {
+                window.solBrightness = e.target.value; document.getElementById('brightValText').innerText = window.solBrightness + '%';
+                document.body.style.filter = `brightness(${window.solBrightness}%)`; localStorage.setItem('sol_brightness', window.solBrightness);
+            });
+            document.getElementById('neonSlider').addEventListener('input', (e) => {
+                window.solNeon = e.target.value; document.getElementById('neonValText').innerText = window.solNeon + '%';
+                document.documentElement.style.setProperty('--neon-scale', window.solNeon / 100); localStorage.setItem('sol_neon', window.solNeon);
+            });
+            document.getElementById('primaryColorPicker').addEventListener('input', (e) => {
+                window.solPrimaryColor = e.target.value; document.documentElement.style.setProperty('--cyan', window.solPrimaryColor); localStorage.setItem('sol_primary', window.solPrimaryColor);
+            });
+            document.getElementById('secondaryColorPicker').addEventListener('input', (e) => {
+                window.solSecondaryColor = e.target.value; document.documentElement.style.setProperty('--purp', window.solSecondaryColor); localStorage.setItem('sol_secondary', window.solSecondaryColor);
+            });
+        }
+        if (isLoggedIn && tab === 'account') {
+            document.getElementById('logoutBtn').addEventListener('click', async () => {
+                const fd = new URLSearchParams();
+                fd.append('action', 'logout');
+                fd.append('csrf_token', csrf);
+                await fetch('', { method: 'POST', body: fd });
+                location.reload();
+            });
+            document.getElementById('accountAvatarImg').addEventListener('click', () => document.getElementById('globalAvatarInput').click());
+            const btnChangeName = document.getElementById('btnChangeName');
+            if(btnChangeName) {
+                btnChangeName.addEventListener('click', () => {
+                    Swal.fire({
+                        title: '<span style="color:var(--cyan); font-family:\'Orbitron\'; text-shadow:0 0 15px var(--cyan);">ĐỔI TÊN HIỂN THỊ</span>',
+                        input: 'text', inputValue: displayName, inputAttributes: { maxlength: 25 },
+                        showCancelButton: true, confirmButtonText: 'LƯU', cancelButtonText: 'HỦY', background: '#05020a', color: '#fff',
+                        customClass: { popup: 'swal-sol-popup', confirmButton: 'sol-btn-ok' }
+                    }).then(async (res) => {
+                        if(res.isConfirmed && res.value.trim() !== '') {
+                            const fd = new URLSearchParams(); fd.append('action', 'change_name'); fd.append('csrf_token', csrf); fd.append('new_name', res.value.trim());
+                            const r = await fetch('', {method:'POST', body:fd}); const d = await r.json();
+                            if(d.s === 'success'){
+                                Swal.fire({icon:'success', title:'Thành công', text:'Đã cập nhật tên!', timer:1500, showConfirmButton:false, background:'#05020a', color:'#fff'});
+                                setTimeout(() => location.reload(), 1500);
+                            } else { if (d.kick) handleKick(); else Swal.fire({icon:'error', text:d.m, background:'#05020a', color:'#fff'}); }
+                        }
+                    });
+                });
+            }
+        }
+        if (isLoggedIn && tab === 'aim') {
+            renderAimList(currentAimFilter);
+            document.querySelectorAll('.aim-filter-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.aim-filter-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active'); currentAimFilter = this.dataset.filter; renderAimList(currentAimFilter);
+                });
+            });
+        }
+        if (isLoggedIn && tab === 'chams') {
+            renderChamsList();
+        }
+        if (isLoggedIn && tab === 'chat') { initChat(); }
+    }
+
+    if (isLoggedIn) {
+        setInterval(async () => {
+            try {
+                const fd = new URLSearchParams(); fd.append('action', 'auth_check'); fd.append('csrf_token', csrf);
+                const r = await fetch('', {method: 'POST', body: fd}); const data = await r.json();
+                if (data.kick) handleKick();
+                else if (data.total_members !== undefined) { const countEl = document.getElementById('onlineCountText'); if (countEl) countEl.innerText = data.total_members; }
+            } catch (err) {}
+        }, 3000);
+
+        setInterval(async () => {
+            if (accountType === 'free' && activeAim === 'no_antena') {
+                let exp = localStorage.getItem('sol_free_expire');
+                if (exp && Date.now() > parseInt(exp)) {
+                    const fd = new URLSearchParams(); fd.append('action', 'toggle_aim'); fd.append('csrf_token', csrf); fd.append('aim_id', 'no_antena'); fd.append('state', 0);
+                    await fetch('', {method:'POST', body: fd});
+                    activeAim = null; localStorage.removeItem('sol_active_aim'); localStorage.removeItem('sol_free_expire');
+                    Swal.fire({icon:'warning', title:'HẾT GIỜ', text:'Thời gian sử dụng miễn phí kết thúc.', background:'#05020a', color:'#fff', confirmButtonColor: '#ef4444'});
+                    if (currentTab === 'aim') renderAimList(currentAimFilter);
+                    if (currentTab === 'chams') renderChamsList();
+                }
+            }
+        }, 5000);
+    }
+
+    document.getElementById('globalAvatarInput').addEventListener('change', function(e) {
+        const file = e.target.files[0]; if (!file) return;
+        const reader = new FileReader();
+        reader.onload = async ev => {
+            const fd = new URLSearchParams(); fd.append('action','upload_avatar'); fd.append('csrf_token', csrf); fd.append('image', ev.target.result);
+            const r = await fetch('', {method:'POST', body: fd}); const data = await r.json();
+            if (data.kick) { handleKick(); return; }
+            if (data.s === 'success') {
+                defaultAvatar = data.avatar; 
+                if(document.getElementById('miniAvatar')) document.getElementById('miniAvatar').src = defaultAvatar;
+                if(document.getElementById('accountAvatarImg')) document.getElementById('accountAvatarImg').src = defaultAvatar;
+                Swal.fire({icon:'success', title:'OK', text:'Đã đổi Avatar!', timer:1500, showConfirmButton:false, background:'#05020a', color:'#fff'});
+            }
+        };
+        reader.readAsDataURL(file);
+    });
+
+    function initChat() {
+        lastChatTime = 0; loadChat();
+        chatInterval = setInterval(pollChat, 2000);
+        document.getElementById('chatSendBtn').addEventListener('click', sendMessage);
+        document.getElementById('chatInput').addEventListener('keypress', e => { if (e.key === 'Enter') sendMessage(); });
+    }
+
+    async function sendMessage() {
+        const input = document.getElementById('chatInput'); const msg = input.value.trim(); if (!msg) return;
+        input.value = '';
+        try {
+            const fd = new URLSearchParams(); fd.append('action','chat_send'); fd.append('csrf_token', csrf); fd.append('message', msg);
+            const r = await fetch('', {method:'POST', body: fd}); const d = await r.json();
+            if (d.kick) { handleKick(); return; }
+            if (d.s === 'error') Swal.fire({icon:'error', text:d.m, toast:true, position:'top-end', showConfirmButton:false, timer:3000, background:'#111', color:'#fff'});
+            pollChat();
+        } catch (err) {}
+    }
+
+    function renderMessage(m) {
+        if (!m) return '';
+        const timeVal = m.time ? m.time * 1000 : Date.now();
+        const timeStr = new Date(timeVal).toLocaleTimeString('vi-VN', {hour:'2-digit',minute:'2-digit'});
+        const safeUser = m.user || 'User';
+        const char = safeUser.charAt(0).toUpperCase();
+        const fallback = `data:image/svg+xml;base64,` + btoa(unescape(encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="36" height="36"><rect width="36" height="36" fill="#1e1f22"/><text x="18" y="24" font-size="16" text-anchor="middle" fill="#fff" font-weight="bold" font-family="Arial">${char}</text></svg>`)));
+        const avatarSrc = m.avatar && m.avatar.length > 50 ? m.avatar : fallback;
+        let nameColor = '#fff'; let badgeTag = '';
+        if (m.role === 'admin') { nameColor = 'var(--red-mnt)'; badgeTag = '<span class="boss-icon">BOSS</span>'; }
+        else if (m.role === 'mod') { nameColor = 'var(--ff-orange)'; badgeTag = '<span class="mod-icon">MOD</span>'; }
+        else if (safeUser === 'Bot 🤖' || safeUser === 'Hệ Thống 🔴') { nameColor = 'var(--cyan)'; }
+        let textMsg = m.message || '';
+        textMsg = textMsg.replace(/@(everyone|all)/gi, '<span style="color:var(--red-mnt); font-weight:800; background:rgba(239,68,68,0.3); padding:2px 6px; border-radius:4px; border:1px solid rgba(239,68,68,0.8); box-shadow:0 0 10px rgba(239,68,68,0.5);">@$1</span>');
+        return `
+            <div class="chat-msg">
+                <img src="${avatarSrc}" class="chat-avatar" onerror="this.src='${fallback}'">
+                <div class="chat-content-wrap">
+                    <div class="chat-msg-header"><span class="chat-user" style="color:${nameColor}">${safeUser} ${badgeTag}</span><span class="chat-time">${timeStr}</span></div>
+                    <div class="chat-text">${textMsg}</div>
+                </div>
+            </div>`;
+    }
+
+    async function loadChat() {
+        if (!isLoggedIn) return;
+        try {
+            const fd = new URLSearchParams(); fd.append('action','chat_poll'); fd.append('csrf_token', csrf); fd.append('since', 0);
+            const r = await fetch('', {method:'POST', body: fd}); const data = await r.json();
+            if (data.kick) { handleKick(); return; }
+            const chatBox = document.getElementById('chatBox');
+            if (chatBox && data.messages) {
+                let html = ''; data.messages.forEach(m => { html += renderMessage(m); if (m.time > lastChatTime) lastChatTime = m.time; });
+                chatBox.innerHTML = html; chatBox.scrollTop = chatBox.scrollHeight;
+            }
+            if (data.total_members !== undefined) { const countEl = document.getElementById('onlineCountText'); if (countEl) countEl.innerText = data.total_members; }
+        } catch (err) {}
+    }
+
+    async function pollChat() {
+        if (!isLoggedIn) return;
+        try {
+            const fd = new URLSearchParams(); fd.append('action','chat_poll'); fd.append('csrf_token', csrf); fd.append('since', lastChatTime);
+            const r = await fetch('', {method:'POST', body: fd}); const data = await r.json();
+            if (data.kick) { handleKick(); return; }
+            const chatBox = document.getElementById('chatBox');
+            if (chatBox && data.messages && data.messages.length > 0) {
+                let scrolledToBottom = chatBox.scrollHeight - chatBox.clientHeight <= chatBox.scrollTop + 50;
+                data.messages.forEach(m => { chatBox.insertAdjacentHTML('beforeend', renderMessage(m)); lastChatTime = Math.max(lastChatTime, m.time); });
+                if (scrolledToBottom) chatBox.scrollTop = chatBox.scrollHeight;
+            }
+            if (data.total_members !== undefined) { const countEl = document.getElementById('onlineCountText'); if (countEl) countEl.innerText = data.total_members; }
+        } catch(err) {}
+    }
+
+    let currentScale = 1;
+    document.getElementById('shrinkTextBtn').addEventListener('click', () => {
+        Swal.fire({
+            title: '<span style="color:var(--cyan); font-family:\'Orbitron\'; font-size:18px; text-shadow:0 0 10px var(--cyan);">TÙY CHỈNH KÍCH THƯỚC</span>',
+            html: `
+                <div style="display:flex; justify-content:center; align-items:center; gap:25px; margin-top:20px; margin-bottom:20px;">
+                    <button id="btnZoomOut" style="width:50px; height:50px; font-size:18px; font-weight:bold; border-radius:50%; background:transparent; border:2px solid var(--pink); color:var(--pink); cursor:pointer; transition:0.3s; box-shadow:0 0 15px rgba(255,0,127,0.6);">A-</button>
+                    <span id="scaleDisplay" style="font-size:22px; font-weight:900; font-family:'Orbitron'; color:#fff; width:70px; text-shadow:0 0 15px #fff;">100%</span>
+                    <button id="btnZoomIn" style="width:50px; height:50px; font-size:22px; font-weight:bold; border-radius:50%; background:transparent; border:2px solid var(--cyan); color:var(--cyan); cursor:pointer; transition:0.3s; box-shadow:0 0 15px rgba(0,255,255,0.6);">A+</button>
+                </div>
+            `,
+            background: '#05020a', showConfirmButton: true, confirmButtonText: 'ĐÓNG', customClass: { popup: 'swal-sol-popup', confirmButton: 'sol-btn-ok' },
+            didOpen: () => {
+                const updateDisplay = () => { document.getElementById('scaleDisplay').innerText = Math.round(currentScale * 100) + '%'; document.body.style.zoom = currentScale; };
+                updateDisplay();
+                document.getElementById('btnZoomOut').onclick = () => { if (currentScale > 0.5) { currentScale -= 0.1; updateDisplay(); } };
+                document.getElementById('btnZoomIn').onclick = () => { if (currentScale < 1.5) { currentScale += 0.1; updateDisplay(); } };
+            }
+        });
+    });
+    </script>
+</body>
+</html>
